@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import AuthText from '../../components/AuthText/AuthText'
 
 export default class SignUpForm extends Component {
     state = {
@@ -39,13 +40,18 @@ export default class SignUpForm extends Component {
 
     render() {
         return (
-            <div>
+            <div id="loginForm">
+                <AuthText />
                 <form autoComplete="off" onSubmit={this.handleSubmit}>
-                    <label>EMAIL</label>
+                    <label>Email address</label>
                     <input type="text" name="email" value={this.state.email} onChange={this.handleChange} required/>
-                    <label>PASSWORD</label>
+                    <label>Password</label>
                     <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required/>
-                    <button type="submit">LOG IN</button>
+                    <div>
+                        <div>Remember me</div>
+                        <div>Forget password?</div>
+                    </div>
+                    <button type="submit">Log In</button>
                 </form>
                 <p>{this.state.error}</p>
             </div>

@@ -6,20 +6,29 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm'
 export default class AuthPage extends Component {
     state = {showLogin: true}
 
+    handleSignUp = () => {
+        this.setState({showLogin: false})
+    }
+
+    handleLogInArrow = () => {
+        this.setState({showLogin: true})
+    }
+
     render() {
         return (
             <div className="AuthPage">
-                <h1>INNERTUNER</h1>
-                <h1>AUTH PAGE</h1>
-                <h2 onClick={() => this.setState({showLogin: !this.state.showLogin})}>
-                    {this.state.showLogin ? 'SIGN UP' : 'LOG IN'}
-                </h2>
                 {this.state.showLogin 
-                    ? 
-                    <LoginForm setUserInState={this.props.setUserInState}/>
+                    ?
+                    <div> 
+                        <LoginForm setUserInState={this.props.setUserInState}/>
+                        <button onClick={this.handleSignUp}>Sign Up</button>
+                    </div>
                     : 
-                    <SignUpForm setUserInState={this.props.setUserInState} />
+                    <SignUpForm setUserInState={this.props.setUserInState} handleLogInArrow={this.handleLogInArrow} />
                 }
+                {/* <h2 onClick={() => this.setState({showLogin: !this.state.showLogin})}>
+                    {this.state.showLogin ? 'SIGN UP' : 'LOG IN'}
+                </h2> */}
             </div>
         )
     }
