@@ -26,9 +26,6 @@ export default class AuthPage extends Component {
                     : 
                     <SignUpForm setUserInState={this.props.setUserInState} handleLogInArrow={this.handleLogInArrow} />
                 }
-                {/* <h2 onClick={() => this.setState({showLogin: !this.state.showLogin})}>
-                    {this.state.showLogin ? 'SIGN UP' : 'LOG IN'}
-                </h2> */}
             </div>
         )
     }
