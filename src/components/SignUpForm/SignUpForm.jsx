@@ -41,8 +41,12 @@ export default class SignUpForm extends Component {
     render() {
         const disable = this.state.password !== this.state.confirm
         return (
-            <div>
+            <div >
+
+
                 <form autoComplete="off" onSubmit={this.handleSubmit}>
+
+                    <div className="rounded border mx-1 5">lets see</div>
                     <label>NAME</label>
                     <input type="text" name="name" value={this.state.name} onChange={this.handleChange} required/>
                     <label>EMAIL</label>

@@ -1,6 +1,11 @@
-import React, {Component} from 'react'
-import {Route, Routes} from 'react-router-dom'
-import './App.css'
+import React, {Component} from 'react';
+import {Route, Routes} from 'react-router-dom';
+
+
+// import Calendar from 'react-calendar';
+// import 'react-calendar/dist/Calendar.css';
+// import InCalendar from './components/InCalendar/InCalnedar';
+
 
 import AuthPage from './pages/AuthPage/AuthPage'
 import HomePage from './pages/HomePage/HomePage'
@@ -28,13 +33,25 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                {this.state.user
-                    ? 
-                    <Routes><Route path='*' element={<HomePage user={this.state.user} logOutUser={this.logOutUser}/>}/></Routes>
-                    :
-                    <AuthPage setUserInState={this.setUserInState}/>
-                }
+            <div id="App" className="">
+
+
+                {/* <div class="flex items-center justify-center"><InCalendar/></div>
+                <div class="flex items-center justify-center"><Calendar/></div> */}
+                
+           
+                <div id="" className=" ">
+
+                    {this.state.user
+                        ? 
+                        <Routes><Route path='*' element={<HomePage user={this.state.user} logOutUser={this.logOutUser}/>}/></Routes>
+                        :
+                        <AuthPage setUserInState={this.setUserInState}/>
+                    }
+                </div>
+
+
+
             </div>
         )
     }
