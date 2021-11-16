@@ -61,7 +61,54 @@ export default class Habit extends Component {
 
 	render() {
 		return (
-			<main className="border border-black" id="Habit">
+
+
+			   <div className="" id="Habit">
+
+
+					<div className="habbitDropdown  ">
+							<div className="flex justify-between px-4 w-full">
+								<div className="mt-6   font-bold text-blue-400">
+									<h1>Water</h1>
+									<h2>{this.props.title}</h2>
+									<h4>{this.state.goalRemainder} left to go! </h4>
+								</div>
+								<button className=" font-bold text-blue-400">
+									<svg xmlns="http://www.w3.org/2000/svg" className="w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+									</svg>
+
+								</button>
+							</div>
+					</div>
+
+					<div className="">
+                    <div className="bg-white">
+                        <div className="flex justify-around border border-gray-50  rounded-xl px-4 mb-4">
+                            <div className="border">-100</div>
+                            <div className="border">1231</div>
+                            <div className="border">+100</div>
+                        </div>
+                        <div className="flex justify-around border border-gray-50 mb-2 px-4">
+                                <div className="mr-2 border rounded-xl h-12 w-3/4 bg-gray-200">1L</div>
+                                <div className="ml-2 border rounded-xl h-12 w-3/4 bg-gray-200">6</div>
+                        </div>
+                        <div className="flex justify-around border border-gray-50 rounded-xl mb-2 px-4">
+                                <div className="mr-2 border rounded-xl h-12 w-3/4 bg-gray-200">1L</div>
+                                <div className="ml-2 border rounded-xl h-12 w-3/4 bg-gray-200">6</div>
+                        </div>
+                        <div className="h-16 border border-gray-50 shadow-xl rounded-xl my-4 px-4 bg-white">
+                        
+                                <div className="border rounded-xl h-12 w-full bg-gray-200 text-center">set</div>
+                        </div>
+                    </div>
+
+            </div>
+
+
+
+
+
 				<div className="border border-black" id="MainHabit">
 					<h2>{this.props.title}</h2>
 					<h4>{this.state.goalRemainder} left to go! </h4>
@@ -84,7 +131,13 @@ export default class Habit extends Component {
 					</div>
 					<button onClick={this.state.handleAddProgress}>ADD</button>
 				</div>
-			</main>
+
+				
+
+
+
+
+			</div>
 		)
 	}
 }

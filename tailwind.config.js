@@ -4,6 +4,9 @@ module.exports = {
   theme: {
     extend: {},
   },
+  fontFamily:{
+    Inter:['Inter']
+  },
   variants: {
     extend: {},
   },

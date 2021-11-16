@@ -6,7 +6,7 @@ import GreetingBar from '../../components/GreetingBar/GreetingBar'
 import WeeklyProgress from '../../components/WeeklyProgress/WeeklyProgress'
 import HabitCard from '../../components/HabitCard/HabitCard'
 import EmotionCard from '../../components/EmotionCard/EmotionCard'
-
+import Test from '../../components/Test/Test'
 export default class HomePage extends Component {
 	state = {
 		currentUser: this.props.user.name,
@@ -109,11 +109,21 @@ export default class HomePage extends Component {
 	render() {
 		return (
 			<div id="HomePage" className="border border-black">
-				<NavBar logOutUser={this.props.logOutUser} />
-				<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
-				<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
-				<EmotionCard updateMood={this.state.updateMood} />
-				<HabitCard water={this.state.water} currentMood={this.state.currentMood} />
+
+				<div className="container">
+					<NavBar logOutUser={this.props.logOutUser} />
+					<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
+					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
+					<EmotionCard updateMood={this.state.updateMood} />
+					<HabitCard water={this.state.water} currentMood={this.state.currentMood} />
+				</div>
+				<Test/>
+
+
+
+
+
+
 			</div>
 		)
 	}
