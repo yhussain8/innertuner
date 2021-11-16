@@ -1,15 +1,8 @@
-import React from 'react';
-
-function UserProfile(props) {
+export default function UserProfile() {
 
   return (
-      <main className='border border-black' id="UserProfile">
-      {/* Will include:
-      basic user info
-      Goals for each habit
-      Log out button */}
-      </main>
-  );
+      <div id="UserProfile" className='border border-black'>
+        {/* Will include: basic user info, goals for each habit, and log out button */}
+      </div>
+  )
 }
-
-export default UserProfile;

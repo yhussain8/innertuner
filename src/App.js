@@ -10,7 +10,7 @@ export default class App extends Component {
     
     setUserInState = (incomingUserData) => {this.setState({user: incomingUserData})}
 
-    logOutUser = () => {this.setState({user:''})}
+    logOutUser = () => {this.setState({user: ''})}
 
     componentDidMount() {
         let token = localStorage.getItem('token')
