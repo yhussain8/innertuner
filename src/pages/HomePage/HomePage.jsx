@@ -20,6 +20,7 @@ export default class HomePage extends Component {
 			{Sa: 3}, 
 			{Su: 3}
 		],
+		todayMood: "",
 		habitValues: [
 			{
 				name: "water",
@@ -112,7 +113,7 @@ export default class HomePage extends Component {
 				<NavBar logOutUser={this.props.logOutUser} />
 				<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 				<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
-				<EmotionCard updateMood={this.state.updateMood} />
+				<EmotionCard updateMood={this.updateMood} todayMood={this.state.todayMood} />
 				<HabitCard water={this.state.water} currentMood={this.state.currentMood} />
 			</div>
 		)
