@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Route, Routes} from 'react-router-dom'
 import './App.css'
+import Test from './components/Test/Test'
 
 import AuthPage from './pages/AuthPage/AuthPage'
 import HomePage from './pages/HomePage/HomePage'
@@ -28,13 +29,20 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div  id="App"className="App text-gray-500 bg-gradient-to-t from-gray-50 to-white">
                 {this.state.user
                     ? 
                     <Routes><Route path='*' element={<HomePage user={this.state.user} logOutUser={this.logOutUser}/>}/></Routes>
                     :
                     <AuthPage setUserInState={this.setUserInState}/>
                 }
+                <Test/>
+
+                <div className="h-20">
+
+
+                </div>
+        
             </div>
         )
     }

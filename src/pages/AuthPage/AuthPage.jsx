@@ -19,9 +19,12 @@ export default class AuthPage extends Component {
             <div className="AuthPage">
                 {this.state.showLogin 
                     ?
-                    <div> 
+                    <div className=""> 
                         <LoginForm setUserInState={this.props.setUserInState}/>
-                        <button onClick={this.handleSignUp}>Sign Up</button>
+                        <div className="container ">
+                            <button className="btn text-blue-500"
+                            onClick={this.handleSignUp}>Sign Up</button>
+                        </div>
                     </div>
                     : 
                     <SignUpForm setUserInState={this.props.setUserInState} handleLogInArrow={this.handleLogInArrow} />
