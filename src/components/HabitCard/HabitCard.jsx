@@ -4,9 +4,10 @@ export default class Habit extends Component {
 	state = {
 		input: false,
 		collapse: false, // display?
-		todayTotal: '',
-		NewData: '',
-		goalRemainder: "300ml",
+		todayTotal: 0,
+		NewData: 0,
+		goalRemainder: 0,
+		statusMsg: "Tap to get started"
 
 	}
 
@@ -59,12 +60,35 @@ export default class Habit extends Component {
 		})
 	}
 
+	handleGoalRemainder(){
+		this.setState({
+			goalRemainder: this.props.habitValues.goal - this.state.todayTotal
+		})
+	}
+
+	goalReached = (input, goalRemainder) => {
+		if (!input) return
+	
+		if ( goalRemainder === 0 ) 
+		  this.setState(
+			{statusMsg: "Completed",
+		 })
+	// below is just an idea for half way point message or something. (logic not complete)
+		if( goalRemainder === 0.5 )
+			this.setState(
+			  {statusMsg: "Almost there!",
+			})
+	  };
+
+
 	render() {
 		return (
 			<main className="border border-black" id="Habit">
 				<div className="border border-black" id="MainHabit">
-					<h2>{this.props.title}</h2>
-					<h4>{this.state.goalRemainder} left to go! </h4>
+					<h2>{this.props.habitValues.name}</h2>
+					{/* Is goal handler actually displaying remainder.. check */}
+					<h4>{this.goalRemainder} left to go! </h4>
+					{/* <h4>{this.handleGoalRemainder} left to go! </h4> */}
 				</div>
 				{/* after expand */}
 
