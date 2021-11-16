@@ -88,8 +88,25 @@ export default class HomePage extends Component {
 	//this is to update today's mood once user selects the mood from null.
 	// probably an if statment? ex) if smiley chosen -> set state
 	// also send a request to save in DB
-	updateMood = (mood) => {
-		this.setState({ todayMood: mood })
+	updateMood = async (e) => {
+		e.preventDefault()
+		try {
+			let fetchResponse = await fetch('/api/users/mood', {
+				method: "POST",
+				headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    userID: this.props.user._id,
+                    date: this.state.currentDate,
+					inputName: "mood",
+					inputValue: e.target.value
+                })
+			})
+            let serverResponse = await fetchResponse.json()
+			console.log("Success: ", serverResponse)
+			this.setState({ todayMood: e.target.value })
+        } catch (err) {
+			console.error('ERROR:', err)
+        }
 	}
 	
 	selectDate = (date) => {
