@@ -36,7 +36,7 @@ export default class App extends Component {
                     :
                     <AuthPage setUserInState={this.setUserInState}/>
                 }
-                <Test/>
+                
 
                 <div className="h-20">
 

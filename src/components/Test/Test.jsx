@@ -44,7 +44,7 @@ function Test() {
             <div className="container">
 
 
-                <div className="habbitDropdown ">
+                <div className="habbitDropdown  ">
                     <div className="flex justify-between px-4 w-full">
                         <div className="mt-6   font-bold text-blue-400">
                             <h1>Water</h1>
@@ -53,6 +53,7 @@ function Test() {
                             <svg xmlns="http://www.w3.org/2000/svg" className="w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
+
                         </button>
                     </div>
                 </div>
