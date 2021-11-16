@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.inputWrapper{
+    @apply flex h-16 border border-gray-50 shadow-xl rounded-xl mb-4 bg-white
+}
+.input{
+    @apply w-full text-center rounded-2xl bg-white
+}
+.btn{
+    @apply border-2 border-blue-500 rounded-2xl w-full h-16
+}
+.container{
+    @apply mx-auto mt-6 px-4 border rounded-2xl text-left w-4/5
+}
+.svg{
+    @apply ml-4 w-9 text-gray-400
+}
+.habbitDropdown{
+    @apply flex h-20 border border-gray-50 shadow-xl rounded-xl mb-4 bg-white
+    
+}
+.moodDropdown{
+    @apply flex h-20 border border-gray-50 shadow-xl rounded-xl mb-4 
+     
+}

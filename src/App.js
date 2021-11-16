@@ -28,13 +28,14 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="App text-gray-500 bg-gradient-to-t from-gray-50 to-white">
                 {this.state.user
                     ? 
                     <Routes><Route path='*' element={<HomePage user={this.state.user} logOutUser={this.logOutUser}/>}/></Routes>
                     :
                     <AuthPage setUserInState={this.setUserInState}/>
                 }
+                <div className="h-20"></div>
             </div>
         )
     }
