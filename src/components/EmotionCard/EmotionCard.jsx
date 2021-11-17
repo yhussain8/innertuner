@@ -36,13 +36,12 @@ export default class EmotionCard extends Component {
 
   render() {
     return (
-      <div className='border border-red-300 my-4' id="EmotionCard">
+      <div className='border border-teal-300 my-4 shadow-2xl rounded-2xl' id="EmotionCard">
         
             {/* after expand */}
             
             <div className="moodDropdown flex justify-between px-4">
                     <div className="mt-4   font-bold text-black">
-                        
                         <h2>{this.state.titleText}</h2>
                         <h4>{this.state.subtitleText}</h4>
                     </div>
@@ -52,7 +51,6 @@ export default class EmotionCard extends Component {
                         </svg>
                     </button>
                 </div>
-               
                   <div className="flex justify-around">
                         <div className="border-red-700 emotionBtn">
                             <button onClick={this.state.updateMood}>
@@ -65,15 +63,15 @@ export default class EmotionCard extends Component {
                        
                        
                         <div className="border-purple-500 emotionBtn">
-                            <button onClick={this.state.updateMood}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="mt-0 w-20 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <button className=""
+                             onClick={this.state.updateMood}>
+                           Happy
 
                              </button>
                             
                         </div>
                 </div>
+               
            
 
       </div>

@@ -108,7 +108,7 @@ export default class HomePage extends Component {
 	// and pass it to each component.
 	render() {
 		return (
-			<div id="HomePage" className="border border-black">
+			<div id="HomePage" className="">
 
 				<div className="container">
 					<NavBar logOutUser={this.props.logOutUser} />
