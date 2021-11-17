@@ -17,6 +17,7 @@ require('./config/database.js')
 
 // api routes
 app.use('/api/users', require('./routes/api/users.js'))
+app.use('/api/userInputs', require('./routes/api/userInputs.js'))
 
 // catch-all route
 app.get('/*', function(req, res) {res.sendFile(path.join(__dirname, 'build', 'index.html'))})

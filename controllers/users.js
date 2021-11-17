@@ -37,24 +37,4 @@ async function login(req, res) {
    }
 }
 
-async function addMood(req, res) {
-   try {
-      console.log('req.body', req.body)
-      let user = await User.findById(req.body.userID)
-      console.log('user', user)
-      let userInput = {
-         date: req.body.date,
-         inputName: req.body.inputName,
-         inputValue: req.body.inputValue
-      }
-      console.log('userInput', userInput)
-      user['userInputs'].push(userInput)
-      console.log('user', user)
-      await User.findOneAndUpdate({_id:req.params.userID}, user)
-      res.status(200).json("Successfully updated user input data")
-   } catch (err) {
-      res.status(400).json("Error updating user input data")
-   }
-}
-
-module.exports = {create, login, addMood}
+module.exports = {create, login}

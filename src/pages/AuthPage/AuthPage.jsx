@@ -20,14 +20,14 @@ export default class AuthPage extends Component {
                 {this.state.showLogin 
                     ?
                     <div className=""> 
-                        <LoginForm setUserInState={this.props.setUserInState}/>
+                        <LoginForm logInUser={this.props.logInUser}/>
                         <div className="container ">
                             <button className="btn text-blue-500"
                             onClick={this.handleSignUp}>Sign Up</button>
                         </div>
                     </div>
                     : 
-                    <SignUpForm setUserInState={this.props.setUserInState} handleLogInArrow={this.handleLogInArrow} />
+                    <SignUpForm logInUser={this.props.logInUser} handleLogInArrow={this.handleLogInArrow} />
                 }
             </div>
         )

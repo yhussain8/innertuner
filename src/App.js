@@ -8,9 +8,9 @@ import HomePage from './pages/HomePage/HomePage'
 export default class App extends Component {
     state = {user: ''}
     
-    setUserInState = (incomingUserData) => {this.setState({user: incomingUserData})}
+    logInUser = (user) => {this.setState({user: user})}
 
-    logOutUser = () => {this.setState({user: ''})}
+    logOutUser = () => {this.setState({user: null})}
 
     componentDidMount() {
         let token = localStorage.getItem('token')
@@ -33,7 +33,7 @@ export default class App extends Component {
                     ? 
                     <Routes><Route path='*' element={<HomePage user={this.state.user} logOutUser={this.logOutUser}/>}/></Routes>
                     :
-                    <AuthPage setUserInState={this.setUserInState}/>
+                    <AuthPage logInUser={this.logInUser}/>
                 }
                 <div className="h-20"></div>
             </div>

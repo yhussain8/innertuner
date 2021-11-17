@@ -11,16 +11,9 @@ export default class HomePage extends Component {
 	state = {
 		currentUser: this.props.user.name,
 		currentDate: null,
-		weeklyMood: [
-			{M: 1}, 
-			{Tu: 2}, 
-			{W: 2}, 
-			{Th: 2}, 
-			{F: 3}, 
-			{Sa: 3}, 
-			{Su: 3}
-		],
-		todayMood: "",
+		weekStartDate: null,
+		weekEndDate: null,
+		weeklyMood: [],
 		waterProgress:2000,
 		habitValues: [
 			{
@@ -77,72 +70,108 @@ export default class HomePage extends Component {
 					{name: 'Wake up time'}
 				]
 			}
-		],
-		currentMood: "",
-		// water: { title: "water", userGoal: "" },
-		// // or water: {title:"water", userGoal: "", todayTotal: "", custinc:"", stdinc=""},
-		// sleep: { title: "sleep", userGoal: "" },
-		// exercise: { title: "exercise", userGoal: "" },
+		]
 	}
 
 	//below is to fetch request for habit data from different day
 	// and display it when user chooses it via date picker.
 	// or maybe this can be part of datepicker function. (date picking + grab+ inject new data)
-	fetchWeeklyProgress = () => {
-		this.setState({ data: "certain day's data" })
-	}
+	// fetchWeeklyProgress = () => {
+	// 	this.setState({ data: "certain day's data" })
+	// }
 
-	//this is to update today's mood once user selects the mood from null.
-	// probably an if statment? ex) if smiley chosen -> set state
-	// also send a request to save in DB
-	updateMood = async (e) => {
-		e.preventDefault()
+	fetchWeeklyMood = async (startDate, endDate) => {
 		try {
-			let fetchResponse = await fetch('/api/users/mood', {
+			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/weeklyMood`, {
 				method: "POST",
 				headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    userID: this.props.user._id,
+					weekStartDate: startDate,
+					weekEndDate: endDate
+           		})
+			})
+			let weeklyMood = await fetchResponse.json()
+			console.log('FETCH RESPONSE', weeklyMood)
+			return weeklyMood
+		} catch (err) {
+			console.error('Error:', err)
+		}
+	}
+
+	updateMood = async (event, mood) => {
+		event.preventDefault()
+		try {
+			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/mood`, {
+				method: "POST",
+				headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+					userId: this.props.user._id,
                     date: this.state.currentDate,
 					inputName: "mood",
-					inputValue: e.target.value
+					inputValue: mood
                 })
 			})
             let serverResponse = await fetchResponse.json()
 			console.log("Success: ", serverResponse)
-			this.setState({ todayMood: e.target.value })
         } catch (err) {
-			console.error('ERROR:', err)
+			console.error('Error:', err)
         }
-	}
-	
-	selectDate = (date) => {
-		this.setState({currentDate: date});
 	}
 	
 	getTodaysDate = () => {
 		let todaysDate = new Date().toISOString().slice(0, 10)
 		return todaysDate
 	}
-	
-	componentDidMount() {
-		this.setState({currentDate: this.getTodaysDate()})
+
+	getWeekDates = (date) => {
+		let formattedDate = new Date(date)
+
+		let dayWeek = formattedDate.getDay() + 1 // adjust for EST vs GMT discrepancy
+
+		let daysBackward = 0
+		let daysForward = 0
+		if (dayWeek === 1) {daysForward = 6; daysBackward = 0}
+		if (dayWeek === 2) {daysForward = 5; daysBackward = 1}
+		if (dayWeek === 3) {daysForward = 4; daysBackward = 2}
+		if (dayWeek === 4) {daysForward = 3; daysBackward = 3}
+		if (dayWeek === 5) {daysForward = 2; daysBackward = 4}
+		if (dayWeek === 6) {daysForward = 1; daysBackward = 5}
+		if (dayWeek === 7) {daysForward = 0; daysBackward = 6}
+		
+		let startDate = new Date(date)
+		startDate.setDate(startDate.getDate() - daysBackward)
+		let startDateString = startDate.toISOString().slice(0, 10)
+		
+		let endDate = new Date(date)
+		endDate.setDate(endDate.getDate() + daysForward)
+		let endDateString = endDate.toISOString().slice(0, 10)
+
+		return [startDateString, endDateString]
+	}
+		
+	async selectDate (date) {
+		let weekDates = this.getWeekDates(date)
+		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
+		this.setState({currentDate: date, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood})
+	}
+
+	async componentDidMount () {
+		let todaysDate = this.getTodaysDate()
+		let weekDates = this.getWeekDates(todaysDate)
+		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
+		this.setState({currentDate: todaysDate, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood})
 	}
 	
-	// we should fetch all 3 habit data and smilley face here.
-	// and pass it to each component.
 	render() {
 		return (
 			<div id="HomePage" className="border border-black">
 				<NavBar logOutUser={this.props.logOutUser} />
 				<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 				<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
-				<EmotionCard updateMood={this.updateMood} todayMood={this.state.todayMood} />
-				<HabitCard waterProgress={this.state.waterProgress} currentMood={this.state.currentMood} habitValues={this.state.habitValues[0]} />
-				<HabitCard currentMood={this.state.currentMood} habitValues={this.state.habitValues[1]} />
-				<HabitCard currentMood={this.state.currentMood} habitValues={this.state.habitValues[2]} />
-				{/* What is water= for?  */}
-				{/* <HabitCard water={this.state.water} currentMood={this.state.currentMood} habitValues={this.state.habitValues[0]} /> */}
+				<EmotionCard updateMood={this.updateMood}/>
+				<HabitCard waterProgress={this.state.waterProgress} habitValues={this.state.habitValues[0]} />
+				<HabitCard habitValues={this.state.habitValues[1]} />
+				<HabitCard habitValues={this.state.habitValues[2]} />
 			</div>
 		)
 	}

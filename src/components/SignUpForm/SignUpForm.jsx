@@ -32,7 +32,7 @@ export default class SignUpForm extends Component {
               localStorage.setItem('token', token)
               
               const userDoc = JSON.parse(atob(token.split('.')[1])).user
-              this.props.setUserInState(userDoc)
+              this.props.logInUser(userDoc)
         } catch (err) {
             console.log("Sign up form error", err)
             this.setState({error: 'LOG IN FAILED - TRY AGAIN'})
