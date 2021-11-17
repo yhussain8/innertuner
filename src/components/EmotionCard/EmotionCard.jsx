@@ -26,6 +26,7 @@ export default class EmotionCard extends Component {
 		if (mood === 1) {
 			stateValues = {
 				hasInput: true,
+				collapse: false,
 				classNameCustom: 'bg-red-700 text-white',
 				titleText: 'Bad Day?',
 				subtitleText: 'Has your day gotten better?'
@@ -33,6 +34,7 @@ export default class EmotionCard extends Component {
 		} else if (mood === 2) {
 			stateValues = {
 				hasInput: true,
+				collapse: false,
 				classNameCustom: 'bg-yellow-500 text-white',
 				titleText: 'Meh Day?',
 				subtitleText: 'Has your day changed?'
@@ -40,6 +42,7 @@ export default class EmotionCard extends Component {
 		} else if (mood === 3) {
 			stateValues = {
 				hasInput: true,
+				collapse: false,
 				classNameCustom: 'bg-green-800 text-white',
 				titleText: 'Good Day?',
 				subtitleText: 'Keep it up!'
@@ -60,7 +63,7 @@ export default class EmotionCard extends Component {
 						{this.state.subtitleText}
 					</div>
 					<div id='collapseButton' className='border border-black' onClick={this.handleCollapse}>
-						{this.state.collapse ? 'Expand Arrow' : 'Collapse Arrow'}
+						{this.state.collapse ? 'Collapse Arrow' : 'Expand Arrow'}
 					</div>
 				</div>
 				{this.state.collapse

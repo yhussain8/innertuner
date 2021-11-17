@@ -113,6 +113,11 @@ export default class HomePage extends Component {
 			})
             let serverResponse = await fetchResponse.json()
 			console.log("Success: ", serverResponse)
+			
+			let weekDates = this.getWeekDates(this.state.currentDate)
+			let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
+			this.setState({weeklyMood: weeklyMood})
+
         } catch (err) {
 			console.error('Error:', err)
         }
@@ -149,7 +154,7 @@ export default class HomePage extends Component {
 		return [startDateString, endDateString]
 	}
 		
-	async selectDate (date) {
+	selectDate = async (date) => {
 		let weekDates = this.getWeekDates(date)
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
 		this.setState({currentDate: date, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood})
