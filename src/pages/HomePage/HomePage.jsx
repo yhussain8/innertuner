@@ -21,11 +21,14 @@ export default class HomePage extends Component {
 			{Su: 3}
 		],
 		todayMood: "",
+		waterProgress:2000,
 		habitValues: [
 			{
 				name: "water",
 				goal: 4000, // in mL
 				incr: 100,
+				habitMsg: "Let's get drinking!",
+				unit: 'mL',
 				presets: [
 					{
 						name: 'Cup',
@@ -43,6 +46,8 @@ export default class HomePage extends Component {
 				name: "exercise",
 				goal: 30, // in minutes
 				incr: 10,
+				habitMsg: "Keep on Moving!",
+				unit: 'min',
 				presets: [
 					{
 						valueText: '15 mins',
@@ -65,6 +70,8 @@ export default class HomePage extends Component {
 			{
 				name: "sleep",
 				goal: 480, // 8 hrs x 60 min = 480 min
+				habitMsg: "Rest is the best medicine.",
+				unit: 'min',
 				presets: [
 					{name: 'Sleep time'},
 					{name: 'Wake up time'}
@@ -72,10 +79,10 @@ export default class HomePage extends Component {
 			}
 		],
 		currentMood: "",
-		water: { title: "water", userGoal: "" },
-		// or water: {title:"water", userGoal: "", todayTotal: "", custinc:"", stdinc=""},
-		sleep: { title: "sleep", userGoal: "" },
-		exercise: { title: "exercise", userGoal: "" },
+		// water: { title: "water", userGoal: "" },
+		// // or water: {title:"water", userGoal: "", todayTotal: "", custinc:"", stdinc=""},
+		// sleep: { title: "sleep", userGoal: "" },
+		// exercise: { title: "exercise", userGoal: "" },
 	}
 
 	//below is to fetch request for habit data from different day
@@ -131,7 +138,11 @@ export default class HomePage extends Component {
 				<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 				<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
 				<EmotionCard updateMood={this.updateMood} todayMood={this.state.todayMood} />
-				<HabitCard water={this.state.water} currentMood={this.state.currentMood} habitValues={this.state.habitValues[0]} />
+				<HabitCard waterProgress={this.state.waterProgress} currentMood={this.state.currentMood} habitValues={this.state.habitValues[0]} />
+				<HabitCard currentMood={this.state.currentMood} habitValues={this.state.habitValues[1]} />
+				<HabitCard currentMood={this.state.currentMood} habitValues={this.state.habitValues[2]} />
+				{/* What is water= for?  */}
+				{/* <HabitCard water={this.state.water} currentMood={this.state.currentMood} habitValues={this.state.habitValues[0]} /> */}
 			</div>
 		)
 	}

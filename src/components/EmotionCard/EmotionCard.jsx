@@ -1,5 +1,4 @@
 import { Component } from "react"
-
 export default class EmotionCard extends Component {
 	state = {
 		input: false,
