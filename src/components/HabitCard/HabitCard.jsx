@@ -113,16 +113,17 @@ export default class Habit extends Component {
 
 	render() {
 		return (
-			<div id="habitCard" className="mb-6 rounded-2xl shadow-xl">
-				<div id="cardTop" className="rounded-2xl px-4 bg-white pt-2">
-					<div id="progressBar" className="water-prog-bg" style={{width:'60vw'}}></div>
+			<div id="habitCard" className="mb-6 rounded-2xl shadow-xl  bg-white">
+				<div id="cardTop" className="rounded-2xl px-4 bg-white py-2">
+					<div id="progressBar" className="water-prog-bg" style={{width:'40vw'}}></div>
 					<div id="cardTopContents" className="flex justify-between">
 						{/* Add custom class name for gradient based text styling */}
-						<div id="titleText" className="h-20 font-bold water-Gradient-Text">
+						<div id="titleText" className=" font-bold water-Gradient-Text">
 							<h2 className="">{this.props.habitValues.name}</h2>
 							<h4 className="">{this.state.goalRemainderText} left to go!</h4>
 						</div>
-						<button id='collapseButton' onClick={this.handleCollapse}>
+						<button 
+            id='collapseButton' onClick={this.handleCollapse}>
 							{this.state.collapse
 								?
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,8 +140,7 @@ export default class Habit extends Component {
 				{this.state.collapse
 					?
 					<div id="cardBottom">
-
-						<div id="habitProgress" className="border-t">
+						<div id="habitProgress" className="">
 							<div id="progressMsg" className="m-4">
 								<h2>{this.props.habitValues.habitMsg}</h2>
 								<h3>{this.state.weekTotal} {this.props.habitValues.unit} has been recorded this week.</h3>
@@ -197,8 +197,9 @@ export default class Habit extends Component {
 						</div>
 
 						<div id="addButton" className="h-16 border border-gray-50 shadow-xl rounded-xl my-4 px-4 bg-white">
-							<div className="border rounded-xl h-12 w-full bg-gray-200 text-center">
-								<button onClick={this.state.handleAddProgress}>ADD</button>{" "}
+							<div className="waterBtn ">
+								<button className=""
+                onClick={this.state.handleAddProgress}>ADD</button>{" "}
 							</div>
 						</div>
 

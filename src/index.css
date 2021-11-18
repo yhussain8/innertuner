@@ -45,11 +45,14 @@
 	@apply font-bold text-gradient bg-gradient-to-r from-orange-400 to-red-500
 }
 .exercise-prog-bg{
-	@apply my-4 rounded-2xl h-5 text-white pt-4 pl-4 bg-gradient-to-r from-orange-400 to-red-500
+	@apply rounded-2xl h-5 text-white pl-4 bg-gradient-to-r from-orange-400 to-red-500
 }
 .water-prog-bg{
 	@apply my-4 rounded-2xl h-5 text-white pt-4 pl-4 bg-gradient-to-r from-blue-700 to-cyan-500
 }
 .sleep-prog-bg{
 	@apply mt-4 rounded-2xl h-5 text-white pt-4 pl-4 bg-gradient-to-r from-purple-700 to-fuchsia-400
+}
+.waterBtn{
+    @apply border rounded-xl h-12 w-full  text-center pt-3 text-white bg-gradient-to-r from-blue-700 to-cyan-500
 }
