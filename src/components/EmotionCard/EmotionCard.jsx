@@ -52,6 +52,46 @@ export default class EmotionCard extends Component {
 		this.props.updateMood(event, mood)
 	}
 
+	componentDidMount() {
+		let mood = parseInt(this.props.currentMood)
+		let stateValues = {}
+		if (mood === 1) {
+			stateValues = {
+				hasInput: true,
+				collapse: false,
+				classNameCustom: 'bg-red-700 text-white',
+				titleText: 'Bad Day?',
+				subtitleText: 'Has your day gotten better?'
+			}
+		} else if (mood === 2) {
+			stateValues = {
+				hasInput: true,
+				collapse: false,
+				classNameCustom: 'bg-yellow-500 text-white',
+				titleText: 'Meh Day?',
+				subtitleText: 'Has your day changed?'
+			}
+		} else if (mood === 3) {
+			stateValues = {
+				hasInput: true,
+				collapse: false,
+				classNameCustom: 'bg-green-800 text-white',
+				titleText: 'Good Day?',
+				subtitleText: 'Keep it up!'
+			}
+		} else {
+			stateValues = {
+				hasInput: false,
+				collapse: false,
+				titleText: 'How is your day going?',
+				subtitleText: 'Hope you have a wonderful day!',
+				classNameDefault: 'rounded-2xl px-4',
+				classNameCustom: 'bg-white'
+			}
+		}
+		this.setState(stateValues)
+	}
+
 	render() {
 		return (
 			<div id='emotionCard' className='mb-6 rounded-2xl shadow-xl'>

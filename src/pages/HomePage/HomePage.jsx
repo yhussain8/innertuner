@@ -13,10 +13,12 @@ export default class HomePage extends Component {
 	state = {
 		currentUser: this.props.user.name,
 		currentDate: null,
-		showUserProfile: true,
+		showUserProfile: false,
 		weekStartDate: null,
 		weekEndDate: null,
 		weeklyMood: [],
+		emotionCardHasInput: false,
+		currentMood: null,
 		waterProgress:2000,
 		habitValues: [
 			{
@@ -130,6 +132,14 @@ export default class HomePage extends Component {
 			console.error('Error:', err)
         }
 	}
+
+	getTodaysMood = (date, weeklyMood) => {
+		let formattedDate = new Date(date)
+		let dayWeek = formattedDate.getDay()
+		let currentMoodObj = weeklyMood[dayWeek]
+		let currentMoodValue = Object.entries(currentMoodObj)[0][1]
+		return currentMoodValue
+	}
 	
 	getTodaysDate = () => {
 		let todaysDate = new Date().toISOString().slice(0, 10)
@@ -165,14 +175,16 @@ export default class HomePage extends Component {
 	selectDate = async (date) => {
 		let weekDates = this.getWeekDates(date)
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
-		this.setState({currentDate: date, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood})
+		let mood = this.getTodaysMood(date, weeklyMood)
+		this.setState({currentDate: date, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood, currentMood: mood})
 	}
 
 	async componentDidMount () {
 		let todaysDate = this.getTodaysDate()
 		let weekDates = this.getWeekDates(todaysDate)
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
-		this.setState({currentDate: todaysDate, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood})
+		let mood = this.getTodaysMood(todaysDate, weeklyMood)
+		this.setState({currentDate: todaysDate, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood, currentMood: mood})
 	}
 	
 	render() {
@@ -189,7 +201,7 @@ export default class HomePage extends Component {
 					
 					<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
-					<EmotionCard updateMood={this.updateMood}/>
+					<EmotionCard currentMood={this.state.currentMood} updateMood={this.updateMood}/>
 					<HabitCard waterProgress={this.state.waterProgress} habitValues={this.state.habitValues[0]} />
 					{/* <HabitCard habitValues={this.state.habitValues[1]} /> */}
 					{/* <HabitCard habitValues={this.state.habitValues[2]} /> */}
