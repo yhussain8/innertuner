@@ -119,6 +119,8 @@ export default class EmotionCard extends Component {
 					:
 					<div id='hiddenSubEmotion'></div>
 				}
+
+
 			</div>
 		)
 	}
