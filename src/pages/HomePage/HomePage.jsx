@@ -180,11 +180,11 @@ export default class HomePage extends Component {
 	}
 
 	async componentDidMount () {
-		let todaysDate = this.getTodaysDate()
-		let weekDates = this.getWeekDates(todaysDate)
+		let todaysDate = await this.getTodaysDate()
+		let weekDates = await this.getWeekDates(todaysDate)
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
-		let mood = this.getTodaysMood(todaysDate, weeklyMood)
-		this.setState({currentDate: todaysDate, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood, currentMood: mood})
+		let mood = await this.getTodaysMood(todaysDate, weeklyMood)
+		await this.setState({currentDate: todaysDate, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood, currentMood: mood})
 	}
 	
 	render() {

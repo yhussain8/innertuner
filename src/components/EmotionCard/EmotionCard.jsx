@@ -54,6 +54,7 @@ export default class EmotionCard extends Component {
 
 	componentDidMount() {
 		let mood = parseInt(this.props.currentMood)
+		console.log('mood', this.props.currentMood)
 		let stateValues = {}
 		if (mood === 1) {
 			stateValues = {
@@ -89,6 +90,7 @@ export default class EmotionCard extends Component {
 				classNameCustom: 'bg-white'
 			}
 		}
+		console.log('state values', stateValues)
 		this.setState(stateValues)
 	}
 
