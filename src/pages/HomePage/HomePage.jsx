@@ -177,8 +177,8 @@ export default class HomePage extends Component {
 					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
 					<EmotionCard updateMood={this.updateMood}/>
 					<HabitCard waterProgress={this.state.waterProgress} habitValues={this.state.habitValues[0]} />
-					<HabitCard habitValues={this.state.habitValues[1]} />
-					<HabitCard habitValues={this.state.habitValues[2]} />
+					{/* <HabitCard habitValues={this.state.habitValues[1]} /> */}
+					{/* <HabitCard habitValues={this.state.habitValues[2]} /> */}
 				</div>
 			</div>
 		)
