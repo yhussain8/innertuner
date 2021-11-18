@@ -6,11 +6,14 @@ import GreetingBar from '../../components/GreetingBar/GreetingBar'
 import WeeklyProgress from '../../components/WeeklyProgress/WeeklyProgress'
 import HabitCard from '../../components/HabitCard/HabitCard'
 import EmotionCard from '../../components/EmotionCard/EmotionCard'
+import UserProfile from '../../components/UserProfile/UserProfile'
+
 
 export default class HomePage extends Component {
 	state = {
 		currentUser: this.props.user.name,
 		currentDate: null,
+		showUserProfile: true,
 		weekStartDate: null,
 		weekEndDate: null,
 		weeklyMood: [],
@@ -71,6 +74,11 @@ export default class HomePage extends Component {
 				]
 			}
 		]
+	}
+
+
+	handleUserProfile = () => {
+		this.setState({showUserProfile: !this.state.showUserProfile})
 	}
 
 	//below is to fetch request for habit data from different day
@@ -171,8 +179,14 @@ export default class HomePage extends Component {
 		return (
 			<div id="HomePage" className="">
 				<div className="container">
-					<NavBar logOutUser={this.props.logOutUser} />
-					<userProfile habitValues={this.state.habitValues}/>
+					<NavBar  handleUserProfile={this.handleUserProfile}/>
+					{this.state.showUserProfile
+						?
+						<UserProfile habitValues={this.state.habitValues} logOutUser={this.props.logOutUser}/>
+						:
+						<div id="emptyUserProfile"></div>
+					}
+					
 					<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
 					<EmotionCard updateMood={this.updateMood}/>

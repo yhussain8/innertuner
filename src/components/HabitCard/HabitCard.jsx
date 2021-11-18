@@ -2,7 +2,7 @@ import { Component } from "react";
 import WeeklyHabitProgress from '../../components/WeeklyHabitProgress/WeeklyHabitProgress'
 import MinusButton from '../../components/IncrementButtons/MinusButton'
 import PlusButton from '../../components/IncrementButtons/PlusButton'
-
+import PresetButton from '../../components/PresetButton/PresetButton'
 
 export default class Habit extends Component {
 	state = {
@@ -174,11 +174,7 @@ export default class Habit extends Component {
 						</div>
 
 						<div id="presetButtonsBar" className="flex justify-around border border-gray-50 rounded-xl mb-2 px-4">
-								<div className="mx-2 border rounded-xl h-12 w-3/4 bg-gray-200">
-									<button onClick={this.state.handleStdInc}>
-										{this.props.habitValues.presets[0].valueText}{" "}
-									</button>
-								</div>
+								<PresetButton handleStdInc={this.handleStdInc} valueText={this.props.habitValues.presets[0].valueText}/>
 								<div className="mx-2 border rounded-xl h-12 w-3/4 bg-gray-200">
 									<button onClick={this.state.handleStdInc}>
 										{this.props.habitValues.presets[1].valueText}{" "}
