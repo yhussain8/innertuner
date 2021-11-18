@@ -1,4 +1,5 @@
 import { Component } from "react";
+import WeeklyHabitProgress from '../../components/WeeklyHabitProgress/WeeklyHabitProgress'
 
 export default class Habit extends Component {
 	state = {
@@ -11,6 +12,15 @@ export default class Habit extends Component {
 		goalRemainderText: "4000 mL",
 		goalRemainderPercentage: 0,
 		statusMsg: "Tap to get started",
+		weeklyHabitProgress: [
+			{M: 1},
+			{Tu: 1},
+			{W: 1},
+			{Th: 0},
+			{F: 0},
+			{Sa: 0},
+			{Su: 0}
+		]
 
 	};
 
@@ -104,7 +114,7 @@ export default class Habit extends Component {
 				<div id="cardTop" className="rounded-2xl px-4 bg-white">
 					<div id="cardTopContents" className="flex justify-between">
 						<div id="titleText" className="mt-4  h-20 font-bold">
-							<h2>Habit Category: {this.props.habitValues.name}</h2>
+							<h2>{this.props.habitValues.name}</h2>
 							<h4>{this.state.goalRemainderText} left to go!</h4>
 						</div>
 						<button id='collapseButton' onClick={this.handleCollapse}>
@@ -126,13 +136,14 @@ export default class Habit extends Component {
 					<div id="cardBottom">
 
 						<div id="habitProgress" className="border">
-							<div className="border border-black" id="progressMsg">
+							<div id="progressMsg" className="m-4">
 								<h2>{this.props.habitValues.habitMsg}</h2>
 								<h3> {this.state.weekTotal} {this.props.habitValues.unit} has been recorded this week.</h3>
 							</div>
-							<div className="border border-black" id="HabitProgressBar">
-								Weekly progress bar for specific habit{" "}
-							</div>
+						</div>
+
+						<div id="habitProgressBar" className="">
+							<WeeklyHabitProgress weeklyProgress={this.state.weeklyHabitProgress} habitName={this.props.habitValues.name} />
 						</div>
 
 						<div id="habitInput">

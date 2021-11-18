@@ -17,7 +17,7 @@ export default class HomePage extends Component {
 		waterProgress:2000,
 		habitValues: [
 			{
-				name: "water",
+				name: "Water",
 				goal: 4000, // in mL
 				incr: 100,
 				habitMsg: "Let's get drinking!",
@@ -36,7 +36,7 @@ export default class HomePage extends Component {
 				]
 			},
 			{
-				name: "exercise",
+				name: "Exercise",
 				goal: 30, // in minutes
 				incr: 10,
 				habitMsg: "Keep on Moving!",
@@ -61,7 +61,7 @@ export default class HomePage extends Component {
 				]
 			},
 			{
-				name: "sleep",
+				name: "Sleep",
 				goal: 480, // 8 hrs x 60 min = 480 min
 				habitMsg: "Rest is the best medicine.",
 				unit: 'min',
