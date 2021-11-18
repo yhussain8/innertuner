@@ -39,7 +39,7 @@ export default class HomePage extends Component {
 				name: "Exercise",
 				goal: 30, // in minutes
 				incr: 10,
-				habitMsg: "Keep on Moving!",
+				habitMsg: "Keep on moving!",
 				unit: 'min',
 				presets: [
 					{
