@@ -1,5 +1,5 @@
 import Logo from '../../components/Logo/Logo'
-import LogOutButton from '../../components/LogOutButton/LogOutButton'
+// import LogOutButton from '../../components/LogOutButton/LogOutButton'
 
 export default function NavBar(props) {
     return (

@@ -56,3 +56,9 @@
 .waterBtn{
     @apply border rounded-xl h-12 w-full  text-center pt-3 text-white bg-gradient-to-r from-blue-700 to-cyan-500
 }
+.sleepBtn{
+    @apply border rounded-xl h-12 w-full  text-center pt-3 text-white bg-gradient-to-r from-purple-700 to-fuchsia-400
+}
+.exerciseBtn{
+    @apply border rounded-xl h-12 w-full  text-center pt-3 text-white bg-gradient-to-r from-orange-400 to-red-500
+}

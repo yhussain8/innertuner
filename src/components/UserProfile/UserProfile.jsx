@@ -48,36 +48,36 @@ export default class UserProfile extends Component {
 
 	render() {
 		return (
-			<div id="UserProfile" className="border">
+			<div id="UserProfile" className="shadow-xl text-center rounded-b-2xl">
 
-				<h1>Set your habit goals here:</h1>
+				<h1 className="font-bold text-lg mb-4">Set your habit goals here:</h1>
 
-				<div className="border" id="MainHabit">
+				<div className="" id="MainHabit">
 
-					<div id="setGoalForm" className="border">
+					<div id="setGoalForm" className="font-semibold">
 						<form>
-							<div id="waterInput" className="">
-								<label>Water (in mL): </label>
+							<div id="waterInput" className="h-10">
+								<label className="">Water(ml): </label>
 								<input
-									className=""
+									className=" w-24 text-center bg-gray-100 rounded-lg"
 									name="waterGoal"
 									value={this.props.habitValues[0].goal}
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div id="exerciseInput" className="">
-								<label>Exercise (in min): </label>
+							<div id="exerciseInput" className="h-10">
+								<label>Exercise (min): </label>
 								<input
-									className=""
+									className="w-24 text-center bg-gray-100 rounded-lg"
 									name="exerciseGoal"
 									value={this.props.habitValues[1].goal}
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div id="sleepInput" className="">
+							<div id="sleepInput" className="h-10">
 								<label>Sleep (in min): </label>
 								<input
-									className=""
+									className="w-24 text-center bg-gray-100 rounded-lg"
 									name="sleepGoal"
 									value={this.props.habitValues[2].goal}
 									onChange={this.handleChange}
@@ -86,8 +86,11 @@ export default class UserProfile extends Component {
 						</form>
 					</div>
 
-					<SaveButton />
-					<LogOutButton logOutUser={this.props.logOutUser}/>
+					<div className="flex justify-around">
+
+						<SaveButton />
+						<LogOutButton logOutUser={this.props.logOutUser}/>
+					</div>
 				</div>
 			</div>
 		)
