@@ -172,6 +172,7 @@ export default class HomePage extends Component {
 			<div id="HomePage" className="">
 				<div className="container">
 					<NavBar logOutUser={this.props.logOutUser} />
+					<userProfile habitValues={this.state.habitValues}/>
 					<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
 					<EmotionCard updateMood={this.updateMood}/>
