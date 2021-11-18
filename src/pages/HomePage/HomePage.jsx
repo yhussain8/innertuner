@@ -169,14 +169,16 @@ export default class HomePage extends Component {
 	
 	render() {
 		return (
-			<div id="HomePage" className="border border-black">
-				<NavBar logOutUser={this.props.logOutUser} />
-				<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
-				<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
-				<EmotionCard updateMood={this.updateMood}/>
-				<HabitCard waterProgress={this.state.waterProgress} habitValues={this.state.habitValues[0]} />
-				<HabitCard habitValues={this.state.habitValues[1]} />
-				<HabitCard habitValues={this.state.habitValues[2]} />
+			<div id="HomePage" className="">
+				<div className="container">
+					<NavBar logOutUser={this.props.logOutUser} />
+					<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
+					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
+					<EmotionCard updateMood={this.updateMood}/>
+					<HabitCard waterProgress={this.state.waterProgress} habitValues={this.state.habitValues[0]} />
+					<HabitCard habitValues={this.state.habitValues[1]} />
+					<HabitCard habitValues={this.state.habitValues[2]} />
+				</div>
 			</div>
 		)
 	}
