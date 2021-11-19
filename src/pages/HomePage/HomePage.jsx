@@ -134,8 +134,6 @@ export default class HomePage extends Component {
            		})
 			})
 			let weeklyWater = await fetchResponse.json()
-			console.log("*** FETCH WEEKLY MOOD ***")
-			console.log('weekly water data', weeklyWater)
 			return weeklyWater
 		} catch (err) {
 			console.error('Error:', err)
@@ -156,15 +154,21 @@ export default class HomePage extends Component {
                 })
 			})
             let serverResponse = await fetchResponse.json()
-			let dailyRemainder = this.state.waterGoalRemainder - dailyTotal
+			console.log("Success: ", serverResponse)
+			let dailyRemainder = this.state.habitValues[0].goal - dailyTotal
 			if (dailyRemainder < 0) {dailyRemainder = 0}
 			let progressPercentage = dailyTotal / this.state.habitValues[0].goal
-			let weeklyTotal = this.state.waterWeekTotal + dailyTotal
 			let day = new Date(this.state.currentDate).getDay()
 			let weeklyProgress = this.state.waterWeeklyProgress
 			let dayObject = weeklyProgress[day]
 			let dayKey = Object.keys(dayObject)[0]
 			weeklyProgress[day][dayKey] = dailyTotal
+			let weeklyTotal = 0
+			for (let i = 0; i < weeklyProgress.length; i++) {
+				let dailyObject = weeklyProgress[i]
+				let dailyKey = Object.keys(dailyObject)[0]
+				weeklyTotal += dailyObject[dailyKey]
+			}
 			this.setState({
 				'waterGoalRemainder': dailyRemainder,
 				'waterProgressPercentage': progressPercentage,
@@ -273,7 +277,6 @@ export default class HomePage extends Component {
 			})
             let serverResponse = await fetchResponse.json()
 			console.log("Success: ", serverResponse)
-			
 			let weekDates = this.getWeekDates(this.state.currentDate)
 			let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
 			this.setState({weeklyMood: weeklyMood, currentMood: currentMood})

@@ -68,9 +68,7 @@ export default class Habit extends Component {
 						</div>
 
 						<div id="addButton" className="h-16  shadow-xl rounded-xl my-4 px-4 bg-white">
-							<div className={this.props.cssAddButton}>
-								<button onClick={this.props.handleAddButton}>Add</button>
-							</div>
+							<div className={this.props.cssAddButton} onClick={this.props.handleAddButton}>Add</div>
 						</div>
 					</div>
 					:
