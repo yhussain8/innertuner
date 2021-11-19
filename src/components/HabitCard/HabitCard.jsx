@@ -103,6 +103,12 @@ export default class Habit extends Component {
 		});
 	}
 
+	// works
+	handleStdInc = (value) => {
+		let updatedInput = this.state.NewInput + value
+		this.setState({ NewInput: updatedInput })
+	}
+
 	//message on the main habit bar will change when goal is acheived. 
 	goalReached = (input, goalRemainder) => {
 		if (!input) return;
@@ -115,15 +121,13 @@ export default class Habit extends Component {
 		return (
 			<div id="habitCard" className="mb-6 rounded-2xl shadow-xl  bg-white">
 				<div id="cardTop" className="rounded-2xl px-4 bg-white py-2">
-					<div id="progressBar" className="water-prog-bg" style={{width:'40vw'}}></div>
+					<div id="progressBar" className="water-prog-bg" style={{ width: '40vw' }}></div>
 					<div id="cardTopContents" className="flex justify-between">
-						{/* Add custom class name for gradient based text styling */}
 						<div id="titleText" className=" font-bold water-Gradient-Text">
 							<h2 className="">{this.props.habitValues.name}</h2>
 							<h4 className="">{this.state.goalRemainderText} left to go!</h4>
 						</div>
-						<button 
-            id='collapseButton' onClick={this.handleCollapse}>
+						<button id='collapseButton' onClick={this.handleCollapse}>
 							{this.state.collapse
 								?
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -152,50 +156,35 @@ export default class Habit extends Component {
 						</div>
 
 						<div id="habitInput" className="bg-white flex justify-around border border-gray-50 rounded-xl px-4 mb-4">
-								<div id="minusButton" className="flex" onClick={this.handleChange}>
-									<MinusButton />
-									{this.props.habitValues.incr}{" "}
-									{this.props.habitValues.unit}
-								</div>
-								<div id="manualInput">
-										<input
-											className="text-center underline"
-											id="NewInput"
-											name="NewInput"
-											value={this.state.NewInput}
-											onChange={this.handleChange}
-										/>
-								</div>
-								<div id="plusButton" className="flex" onClick={this.handleChange}>
-										{this.props.habitValues.incr}{" "}
-										{this.props.habitValues.unit}
-										<PlusButton />
-								</div>
+							<div id="minusButton" className="flex" onClick={this.handleMinuButton}>
+								<MinusButton />
+								{this.props.habitValues.incr}{" "}
+								{this.props.habitValues.unit}
+							</div>
+							<div id="manualInput">
+								<input
+									className="text-center underline"
+									id="NewInput"
+									name="NewInput"
+									value={this.state.NewInput}
+									onChange={this.handleChange}
+								/>
+							</div>
+							<div id="plusButton" className="flex" onClick={this.handlePlusButton}>
+								{this.props.habitValues.incr}{" "}
+								{this.props.habitValues.unit}
+								<PlusButton />
+							</div>
 						</div>
 
 						<div id="presetButtonsBar" className="flex justify-around border border-gray-50 rounded-xl mb-2 px-4">
-								<PresetButton handleStdInc={this.handleStdInc} valueText={this.props.habitValues.presets[0].valueText}/>
-								<div className="mx-2 border rounded-xl h-12 w-3/4 bg-gray-200">
-									<button onClick={this.state.handleStdInc}>
-										{this.props.habitValues.presets[1].valueText}{" "}
-									</button>
-								</div>
-								<div className="mx-2 border rounded-xl h-12 w-3/4 bg-gray-200">
-									<button onClick={this.state.handleStdInc}>
-										{this.props.habitValues.presets[0].valueText}{" "}
-									</button>
-								</div>
-								<div className="mx-2 border rounded-xl h-12 w-3/4 bg-gray-200">
-									<button onClick={this.state.handleStdInc}>
-										{this.props.habitValues.presets[1].valueText}{" "}
-									</button>
-								</div>
+							{this.props.habitValues.presets.map((value, index) => <PresetButton handleStdInc={this.handleStdInc} valueText={value.valueText} value={value.value} />)}
 						</div>
 
 						<div id="addButton" className="h-16 border border-gray-50 shadow-xl rounded-xl my-4 px-4 bg-white">
 							<div className="waterBtn ">
 								<button className=""
-                onClick={this.state.handleAddProgress}>ADD</button>{" "}
+									onClick={this.state.handleAddProgress}>ADD</button>{" "}
 							</div>
 						</div>
 

@@ -16,9 +16,13 @@ export default class HomePage extends Component {
 		showUserProfile: false,
 		weekStartDate: null,
 		weekEndDate: null,
-		weeklyMood: [],
-		emotionCardHasInput: false,
-		currentMood: null,
+		weeklyMood: [{M: 0}, {Tu: 0}, {W: 0}, {Th: 0}, {F: 0}, {Sa: 0}, {Su: 0}],
+		currentMood: 0,
+		emotionBackgroundDefault: 'rounded-2xl px-4',
+		emotionBackgroundCustom: 'bg-white',
+		emotionTitleText: 'How is your day going?',
+		emotionSubtitleText: 'Hope you have a wonderful day!',
+		emotionCardCollapse: false,
 		waterProgress:2000,
 		habitValues: [
 			{
@@ -90,6 +94,40 @@ export default class HomePage extends Component {
 	// 	this.setState({ data: "certain day's data" })
 	// }
 
+	handleEmotionClick = (currentMood) => {
+		let emotionVariables = {}
+		if (currentMood === 1) {
+			emotionVariables = {
+				emotionCardCollapse: false,
+				emotionBackgroundCustom: 'bg-red-700 text-white',
+				emotionTitleText: 'Bad Day?',
+				emotionSubtitleText: 'Has your day gotten better?'
+			}
+		} else if (currentMood === 2) {
+			emotionVariables = {
+				emotionCardCollapse: false,
+				emotionBackgroundCustom: 'bg-yellow-500 text-white',
+				emotionTitleText: 'Meh Day?',
+				emotionSubtitleText: 'Has your day changed?'
+			}
+		} else if (currentMood === 3) {
+			emotionVariables = {
+				emotionCardCollapse: false,
+				emotionBackgroundCustom: 'bg-green-800 text-white',
+				emotionTitleText: 'Good Day?',
+				emotionSubtitleText: 'Keep it up!'
+			}
+		}
+		this.setState(emotionVariables)
+		this.updateMood(currentMood)
+	}
+
+	handleEmotionCollapse = () => {
+		let collapse = this.state.emotionCardCollapse
+		collapse = !collapse
+		this.setState({emotionCardCollapse: collapse})
+	}
+
 	fetchWeeklyMood = async (startDate, endDate) => {
 		try {
 			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/weeklyMood`, {
@@ -101,15 +139,13 @@ export default class HomePage extends Component {
            		})
 			})
 			let weeklyMood = await fetchResponse.json()
-			console.log('FETCH RESPONSE', weeklyMood)
 			return weeklyMood
 		} catch (err) {
 			console.error('Error:', err)
 		}
 	}
 
-	updateMood = async (event, mood) => {
-		event.preventDefault()
+	updateMood = async (currentMood) => {
 		try {
 			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/mood`, {
 				method: "POST",
@@ -118,7 +154,7 @@ export default class HomePage extends Component {
 					userId: this.props.user._id,
                     date: this.state.currentDate,
 					inputName: "mood",
-					inputValue: mood
+					inputValue: currentMood
                 })
 			})
             let serverResponse = await fetchResponse.json()
@@ -126,7 +162,7 @@ export default class HomePage extends Component {
 			
 			let weekDates = this.getWeekDates(this.state.currentDate)
 			let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
-			this.setState({weeklyMood: weeklyMood})
+			this.setState({weeklyMood: weeklyMood, currentMood: currentMood})
 
         } catch (err) {
 			console.error('Error:', err)
@@ -148,7 +184,6 @@ export default class HomePage extends Component {
 
 	getWeekDates = (date) => {
 		let formattedDate = new Date(date)
-
 		let dayWeek = formattedDate.getDay() + 1 // adjust for EST vs GMT discrepancy
 
 		let daysBackward = 0
@@ -160,7 +195,7 @@ export default class HomePage extends Component {
 		if (dayWeek === 5) {daysForward = 2; daysBackward = 4}
 		if (dayWeek === 6) {daysForward = 1; daysBackward = 5}
 		if (dayWeek === 7) {daysForward = 0; daysBackward = 6}
-		
+	
 		let startDate = new Date(date)
 		startDate.setDate(startDate.getDate() - daysBackward)
 		let startDateString = startDate.toISOString().slice(0, 10)
@@ -172,19 +207,69 @@ export default class HomePage extends Component {
 		return [startDateString, endDateString]
 	}
 		
-	selectDate = async (date) => {
-		let weekDates = this.getWeekDates(date)
+	selectDate = async (dateSelected) => {
+		let weekDates = this.getWeekDates(dateSelected)
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
-		let mood = this.getTodaysMood(date, weeklyMood)
-		this.setState({currentDate: date, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood, currentMood: mood})
+		let currentMood = this.getTodaysMood(dateSelected, weeklyMood)
+		let emotionVariables = this.setEmotionVariables(currentMood)
+		this.setState({
+			currentDate: dateSelected, 
+			weekStartDate: weekDates[0], 
+			weekEndDate: weekDates[1], 
+			weeklyMood: weeklyMood, 
+			currentMood: currentMood,
+			emotionBackgroundCustom: emotionVariables['emotionBackgroundCustom'],
+			emotionTitleText: emotionVariables['emotionTitleText'],
+			emotionSubtitleText: emotionVariables['emotionSubtitleText']
+		})
+	}
+
+	setEmotionVariables = (mood) => {
+		let emotionVariables = {}
+		if (mood === 1) {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-red-700 text-white',
+				'emotionTitleText': 'Bad Day?',
+				'emotionSubtitleText': 'Has your day gotten better?'
+			}
+		} else if (mood === 2) {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-yellow-500 text-white',
+				'emotionTitleText': 'Meh Day?',
+				'emotionSubtitleText': 'Has your day changed?'
+			}
+		} else if (mood === 3) {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-green-800 text-white',
+				'emotionTitleText': 'Good Day?',
+				'emotionSubtitleText': 'Keep it up!'
+			}
+		} else {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-white',
+				'emotionTitleText': 'How is your day going?',
+				'emotionSubtitleText': 'Hope you have a wonderful day!'
+			}
+		}
+		return emotionVariables
 	}
 
 	async componentDidMount () {
-		let todaysDate = await this.getTodaysDate()
-		let weekDates = await this.getWeekDates(todaysDate)
+		let todaysDate = this.getTodaysDate()
+		let weekDates = this.getWeekDates(todaysDate)
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
-		let mood = await this.getTodaysMood(todaysDate, weeklyMood)
-		await this.setState({currentDate: todaysDate, weekStartDate: weekDates[0], weekEndDate: weekDates[1], weeklyMood: weeklyMood, currentMood: mood})
+		let currentMood = this.getTodaysMood(todaysDate, weeklyMood)
+		let emotionVariables = this.setEmotionVariables(currentMood)
+		this.setState({
+			currentDate: todaysDate, 
+			weekStartDate: weekDates[0], 
+			weekEndDate: weekDates[1], 
+			weeklyMood: weeklyMood, 
+			currentMood: currentMood, 
+			emotionBackgroundCustom: emotionVariables['emotionBackgroundCustom'],
+			emotionTitleText: emotionVariables['emotionTitleText'],
+			emotionSubtitleText: emotionVariables['emotionSubtitleText']
+		})
 	}
 	
 	render() {
@@ -198,13 +283,10 @@ export default class HomePage extends Component {
 						:
 						<div id="emptyUserProfile"></div>
 					}
-					
 					<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
-					<EmotionCard currentMood={this.state.currentMood} updateMood={this.updateMood}/>
+					<EmotionCard handleClick={this.handleEmotionClick} backgroundDefault={this.state.emotionBackgroundDefault} backgroundCustom={this.state.emotionBackgroundCustom} titleText={this.state.emotionTitleText} subtitleText={this.state.emotionSubtitleText} collapse={this.state.emotionCardCollapse} handleCollapse={this.handleEmotionCollapse}/>
 					<HabitCard waterProgress={this.state.waterProgress} habitValues={this.state.habitValues[0]} />
-					{/* <HabitCard habitValues={this.state.habitValues[1]} /> */}
-					{/* <HabitCard habitValues={this.state.habitValues[2]} /> */}
 				</div>
 			</div>
 		)
