@@ -1,4 +1,4 @@
-# INNER TUNER
+# I N N E R T U N E R
 
 https://innertuner.herokuapp.com/
 
