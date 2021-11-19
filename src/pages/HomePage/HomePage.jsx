@@ -29,12 +29,30 @@ export default class HomePage extends Component {
 		waterCardCollapse: false,
 		waterDailyTotal: 0,
 		waterGoalRemainder: 4000,
-		waterProgressPercentage: '0%',
+		waterProgressPercentage: 0,
 		waterWeekTotal: 0,
 		cssWaterProgressBar: "water-prog-bg",
 		cssWaterTitleText: "font-bold water-Gradient-Text",
 		cssWaterAddButton: "waterBtn",
 		waterWeeklyProgress: [
+			{ M: 0 },
+			{ Tu: 0 },
+			{ W: 0 },
+			{ Th: 0 },
+			{ F: 0 },
+			{ Sa: 0 },
+			{ Su: 0 }
+		],
+		// exercise
+		exerciseCardCollapse: false,
+		exerciseDailyTotal: 0,
+		exerciseGoalRemainder: 30,
+		exerciseProgressPercentage: 0,
+		exerciseWeekTotal: 0,
+		cssExerciseProgressBar: "exercise-prog-bg",
+		cssExerciseTitleText: "font-bold exercise-Gradient-Text",
+		cssExerciseAddButton: "exerciseBtn",
+		exerciseWeeklyProgress: [
 			{ M: 0 },
 			{ Tu: 0 },
 			{ W: 0 },
@@ -102,6 +120,120 @@ export default class HomePage extends Component {
 		]
 	}
 
+	// EXERCISE FUNCTIONS
+	setExerciseVariables = (currentDate, weeklyExercise) => {
+		let formattedDate = new Date(currentDate)
+		let dayWeek = formattedDate.getDay()
+		let dailyExerciseObj = weeklyExercise[dayWeek]
+		let dailyTotal = Object.entries(dailyExerciseObj)[0][1]
+		let dailyRemainder = this.state.habitValues[1].goal - dailyTotal
+		if (dailyRemainder < 0) {dailyRemainder = 0}
+		let progressPercentage = dailyTotal / this.state.habitValues[1].goal
+		if (progressPercentage > 1) {progressPercentage = 1}
+		let weeklyTotal = 0
+		for (let i = 0; i < weeklyExercise.length; i++) {
+			let dailyObject = weeklyExercise[i]
+			let dailyKey = Object.keys(dailyObject)[0]
+			weeklyTotal += dailyObject[dailyKey]
+		}
+		let exerciseVariables = {}
+		exerciseVariables = {
+			'exerciseDailyTotal': dailyTotal,
+			'exerciseGoalRemainder': dailyRemainder,
+			'exerciseProgressPercentage': progressPercentage,
+			'exerciseWeekTotal': weeklyTotal
+		}
+		return exerciseVariables
+	}
+
+	fetchWeeklyExercise = async (startDate, endDate) => {
+		try {
+			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/weeklyHabit`, {
+				method: "POST",
+				headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+					weekStartDate: startDate,
+					weekEndDate: endDate,
+					inputName: "exercise"
+           		})
+			})
+			let weeklyExercise = await fetchResponse.json()
+			return weeklyExercise
+		} catch (err) {
+			console.error('Error:', err)
+		}
+	}
+
+	handleExerciseAddButton = async () => {
+		let dailyTotal = this.state.exerciseDailyTotal
+		try {
+			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/habit`, {
+				method: "POST",
+				headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+					userId: this.props.user._id,
+                    date: this.state.currentDate,
+					inputName: "exercise",
+					inputValue: dailyTotal
+                })
+			})
+            let serverResponse = await fetchResponse.json()
+			console.log("Success: ", serverResponse)
+			let dailyRemainder = this.state.habitValues[1].goal - dailyTotal
+			if (dailyRemainder < 0) {dailyRemainder = 0}
+			let progressPercentage = dailyTotal / this.state.habitValues[1].goal
+			if (progressPercentage > 1) {progressPercentage = 1}
+			let day = new Date(this.state.currentDate).getDay()
+			let weeklyProgress = this.state.exerciseWeeklyProgress
+			let dayObject = weeklyProgress[day]
+			let dayKey = Object.keys(dayObject)[0]
+			weeklyProgress[day][dayKey] = dailyTotal
+			let weeklyTotal = 0
+			for (let i = 0; i < weeklyProgress.length; i++) {
+				let dailyObject = weeklyProgress[i]
+				let dailyKey = Object.keys(dailyObject)[0]
+				weeklyTotal += dailyObject[dailyKey]
+			}
+			this.setState({
+				'exerciseGoalRemainder': dailyRemainder,
+				'exerciseProgressPercentage': progressPercentage,
+				'exerciseWeekTotal': weeklyTotal,
+				'exerciseWeeklyProgress': weeklyProgress
+			})
+        } catch (err) {
+			console.error('Error:', err)
+        }
+	}
+
+	handleExercisePresetButton = (value) => {
+		let updatedValue = this.state.exerciseDailyTotal + value
+		this.setState({exerciseDailyTotal: updatedValue})
+	}
+
+	handleExerciseMinusButton = () => {
+		let incr = this.state.habitValues[1].incr
+		let dailyTotal = this.state.exerciseDailyTotal - incr
+		if (dailyTotal < 0) {dailyTotal = 0}
+		this.setState({exerciseDailyTotal: dailyTotal})
+	}
+
+	handleExercisePlusButton = () => {
+		let incr = this.state.habitValues[1].incr
+		let dailyTotal = this.state.exerciseDailyTotal + incr
+		this.setState({exerciseDailyTotal: dailyTotal})
+	}
+
+	handleExerciseManualInput = (e) => {
+		this.setState({exerciseDailyTotal: parseInt(e.target.value)})
+	}
+
+	handleExerciseCollapse = () => {
+		let collapse = this.state.exerciseCardCollapse
+		collapse = !collapse
+		this.setState({exerciseCardCollapse: collapse})	
+	}
+
+	// WATER FUNCTIONS
 	setWaterVariables = (currentDate, weeklyWater) => {
 		let formattedDate = new Date(currentDate)
 		let dayWeek = formattedDate.getDay()
@@ -110,8 +242,13 @@ export default class HomePage extends Component {
 		let dailyRemainder = this.state.habitValues[0].goal - dailyTotal
 		if (dailyRemainder < 0) {dailyRemainder = 0}
 		let progressPercentage = dailyTotal / this.state.habitValues[0].goal
-		let weeklyTotal = this.state.waterWeekTotal + dailyTotal
-		
+		if (progressPercentage > 1) {progressPercentage = 1}
+		let weeklyTotal = 0
+		for (let i = 0; i < weeklyWater.length; i++) {
+			let dailyObject = weeklyWater[i]
+			let dailyKey = Object.keys(dailyObject)[0]
+			weeklyTotal += dailyObject[dailyKey]
+		}
 		let waterVariables = {}
 		waterVariables = {
 			'waterDailyTotal': dailyTotal,
@@ -158,6 +295,7 @@ export default class HomePage extends Component {
 			let dailyRemainder = this.state.habitValues[0].goal - dailyTotal
 			if (dailyRemainder < 0) {dailyRemainder = 0}
 			let progressPercentage = dailyTotal / this.state.habitValues[0].goal
+			if (progressPercentage > 1) {progressPercentage = 1}
 			let day = new Date(this.state.currentDate).getDay()
 			let weeklyProgress = this.state.waterWeeklyProgress
 			let dayObject = weeklyProgress[day]
@@ -208,10 +346,7 @@ export default class HomePage extends Component {
 		this.setState({waterCardCollapse: collapse})	
 	}
 
-	handleUserProfile = () => {
-		this.setState({showUserProfile: !this.state.showUserProfile})
-	}
-
+	// EMOTION FUNCTIONS
 	handleEmotionClick = (currentMood) => {
 		let emotionVariables = {}
 		if (currentMood === 1) {
@@ -293,7 +428,38 @@ export default class HomePage extends Component {
 		let currentMoodValue = Object.entries(currentMoodObj)[0][1]
 		return currentMoodValue
 	}
+
+	setEmotionVariables = (mood) => {
+		let emotionVariables = {}
+		if (mood === 1) {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-red-700 text-white',
+				'emotionTitleText': 'Bad Day?',
+				'emotionSubtitleText': 'Has your day gotten better?'
+			}
+		} else if (mood === 2) {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-yellow-500 text-white',
+				'emotionTitleText': 'Meh Day?',
+				'emotionSubtitleText': 'Has your day changed?'
+			}
+		} else if (mood === 3) {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-green-800 text-white',
+				'emotionTitleText': 'Good Day?',
+				'emotionSubtitleText': 'Keep it up!'
+			}
+		} else {
+			emotionVariables = {
+				'emotionBackgroundCustom': 'bg-white',
+				'emotionTitleText': 'How is your day going?',
+				'emotionSubtitleText': 'Hope you have a wonderful day!'
+			}
+		}
+		return emotionVariables
+	}
 	
+	// DATE & CALENDAR FUNCTIONS
 	getTodaysDate = () => {
 		let todaysDate = new Date().toISOString().slice(0, 10)
 		return todaysDate
@@ -333,6 +499,9 @@ export default class HomePage extends Component {
 		// water
 		let weeklyWater = await this.fetchWeeklyWater(weekDates[0], weekDates[1])
 		let waterVariables = this.setWaterVariables(dateSelected, weeklyWater)
+		// exercise
+		let weeklyExercise = await this.fetchWeeklyExercise(weekDates[0], weekDates[1])
+		let exerciseVariables = this.setExerciseVariables(dateSelected, weeklyExercise)
 		this.setState({
 			currentDate: dateSelected, 
 			weekStartDate: weekDates[0], 
@@ -348,38 +517,19 @@ export default class HomePage extends Component {
 			waterDailyTotal: waterVariables['waterDailyTotal'],
 			waterGoalRemainder: waterVariables['waterGoalRemainder'],
 			waterProgressPercentage: waterVariables['waterProgressPercentage'],
-			waterWeekTotal: waterVariables['waterWeekTotal']
+			waterWeekTotal: waterVariables['waterWeekTotal'],
+			// exercise
+			exerciseWeeklyProgress: weeklyExercise,
+			exerciseDailyTotal: exerciseVariables['exerciseDailyTotal'],
+			exerciseGoalRemainder: exerciseVariables['exerciseGoalRemainder'],
+			exerciseProgressPercentage: exerciseVariables['exerciseProgressPercentage'],
+			exerciseWeekTotal: exerciseVariables['exerciseWeekTotal']
 		})
 	}
 
-	setEmotionVariables = (mood) => {
-		let emotionVariables = {}
-		if (mood === 1) {
-			emotionVariables = {
-				'emotionBackgroundCustom': 'bg-red-700 text-white',
-				'emotionTitleText': 'Bad Day?',
-				'emotionSubtitleText': 'Has your day gotten better?'
-			}
-		} else if (mood === 2) {
-			emotionVariables = {
-				'emotionBackgroundCustom': 'bg-yellow-500 text-white',
-				'emotionTitleText': 'Meh Day?',
-				'emotionSubtitleText': 'Has your day changed?'
-			}
-		} else if (mood === 3) {
-			emotionVariables = {
-				'emotionBackgroundCustom': 'bg-green-800 text-white',
-				'emotionTitleText': 'Good Day?',
-				'emotionSubtitleText': 'Keep it up!'
-			}
-		} else {
-			emotionVariables = {
-				'emotionBackgroundCustom': 'bg-white',
-				'emotionTitleText': 'How is your day going?',
-				'emotionSubtitleText': 'Hope you have a wonderful day!'
-			}
-		}
-		return emotionVariables
+	// USER PROFILE FUNCTION
+	handleUserProfile = () => {
+		this.setState({showUserProfile: !this.state.showUserProfile})
 	}
 
 	async componentDidMount () {
@@ -392,6 +542,9 @@ export default class HomePage extends Component {
 		// water
 		let weeklyWater = await this.fetchWeeklyWater(weekDates[0], weekDates[1])
 		let waterVariables = this.setWaterVariables(todaysDate, weeklyWater)
+		// exercise
+		let weeklyExercise = await this.fetchWeeklyExercise(weekDates[0], weekDates[1])
+		let exerciseVariables = this.setExerciseVariables(todaysDate, weeklyExercise)
 		this.setState({
 			currentDate: todaysDate, 
 			weekStartDate: weekDates[0], 
@@ -407,7 +560,13 @@ export default class HomePage extends Component {
 			waterDailyTotal: waterVariables['waterDailyTotal'],
 			waterGoalRemainder: waterVariables['waterGoalRemainder'],
 			waterProgressPercentage: waterVariables['waterProgressPercentage'],
-			waterWeekTotal: waterVariables['waterWeekTotal']
+			waterWeekTotal: waterVariables['waterWeekTotal'],
+			// exercise
+			exerciseWeeklyProgress: weeklyExercise,
+			exerciseDailyTotal: exerciseVariables['exerciseDailyTotal'],
+			exerciseGoalRemainder: exerciseVariables['exerciseGoalRemainder'],
+			exerciseProgressPercentage: exerciseVariables['exerciseProgressPercentage'],
+			exerciseWeekTotal: exerciseVariables['exerciseWeekTotal']
 		})
 	}
 	
@@ -442,6 +601,24 @@ export default class HomePage extends Component {
 						cssProgressBar={this.state.cssWaterProgressBar}
 						cssTitleText={this.state.cssWaterTitleText}
 						cssAddButton={this.state.cssWaterAddButton}
+					/>
+					<HabitCard 
+						habitValues={this.state.habitValues[1]} 
+						habitProgressPercentage={this.state.exerciseProgressPercentage}
+						goalRemainder={this.state.exerciseGoalRemainder}
+						collapse={this.state.exerciseCardCollapse}
+						handleCollapse={this.handleExerciseCollapse}
+						weekTotal={this.state.exerciseWeekTotal}
+						weeklyProgress={this.state.exerciseWeeklyProgress}
+						dailyTotal={this.state.exerciseDailyTotal}
+						handleMinusButton={this.handleExerciseMinusButton}
+						handlePlusButton={this.handleExercisePlusButton}
+						handleManualInput={this.handleExerciseManualInput}
+						handlePresetButton={this.handleExercisePresetButton}
+						handleAddButton={this.handleExerciseAddButton}
+						cssProgressBar={this.state.cssExerciseProgressBar}
+						cssTitleText={this.state.cssExerciseTitleText}
+						cssAddButton={this.state.cssExerciseAddButton}
 					/>
 				</div>
 			</div>

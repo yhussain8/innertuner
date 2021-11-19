@@ -9,7 +9,7 @@ export default class Habit extends Component {
 		return (
 			<div id="habitCard" className="mb-6 rounded-2xl shadow-xl bg-white">
 				<div id="cardTop" className="rounded-2xl px-4 bg-white py-2">
-					<div id="progressBar" className={this.props.cssProgressBar} style={{ width: this.props.habitProgressPercentage }}></div>
+					<div id="progressBar" className={this.props.cssProgressBar} style={{ width: `${parseInt(this.props.habitProgressPercentage*100)}%` }}></div>
 					<div id="cardTopContents" className="flex justify-between">
 						<div id="titleText" className={this.props.cssTitleText}>
 							<p>{this.props.habitValues.name}</p>
