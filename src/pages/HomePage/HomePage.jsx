@@ -23,7 +23,23 @@ export default class HomePage extends Component {
 		emotionTitleText: 'How is your day going?',
 		emotionSubtitleText: 'Hope you have a wonderful day!',
 		emotionCardCollapse: false,
-		waterProgress:2000,
+		waterCardCollapse: false,
+		waterProgressPercentage: '25%',
+		waterWeekTotal: 12000,
+		waterGoalRemainder: 3000,
+		waterDailyTotal: 1000,
+		cssWaterProgressBar: "water-prog-bg",
+		cssWaterTitleText: "font-bold water-Gradient-Text",
+		cssWaterAddButton: "waterBtn",
+		waterWeeklyProgress: [
+			{ M: 1 },
+			{ Tu: 1 },
+			{ W: 1 },
+			{ Th: 0 },
+			{ F: 0 },
+			{ Sa: 0 },
+			{ Su: 0 }
+		],
 		habitValues: [
 			{
 				name: "Water",
@@ -82,17 +98,41 @@ export default class HomePage extends Component {
 		]
 	}
 
+	handleWaterAddButton = () => {
+		alert('Save data now')
+	}
+
+	handleWaterPresetButton = (value) => {
+		let updatedValue = this.state.waterDailyTotal + value
+		this.setState({waterDailyTotal: updatedValue})
+	}
+
+	handleWaterMinusButton = () => {
+		let incr = this.state.habitValues[0].incr
+		let dailyTotal = this.state.waterDailyTotal - incr
+		if (dailyTotal < 0) {dailyTotal = 0}
+		this.setState({waterDailyTotal: dailyTotal})
+	}
+
+	handleWaterPlusButton = () => {
+		let incr = this.state.habitValues[0].incr
+		let dailyTotal = this.state.waterDailyTotal + incr
+		this.setState({waterDailyTotal: dailyTotal})
+	}
+
+	handleWaterManualInput = (e) => {
+		this.setState({waterDailyTotal: parseInt(e.target.value)})
+	}
+
+	handleWaterCollapse = () => {
+		let collapse = this.state.waterCardCollapse
+		collapse = !collapse
+		this.setState({waterCardCollapse: collapse})	
+	}
 
 	handleUserProfile = () => {
 		this.setState({showUserProfile: !this.state.showUserProfile})
 	}
-
-	//below is to fetch request for habit data from different day
-	// and display it when user chooses it via date picker.
-	// or maybe this can be part of datepicker function. (date picking + grab+ inject new data)
-	// fetchWeeklyProgress = () => {
-	// 	this.setState({ data: "certain day's data" })
-	// }
 
 	handleEmotionClick = (currentMood) => {
 		let emotionVariables = {}
@@ -286,7 +326,24 @@ export default class HomePage extends Component {
 					<GreetingBar currentUser={this.state.currentUser} currentDate={this.state.currentDate} selectDate={this.selectDate} />
 					<WeeklyProgress weeklyProgress={this.state.weeklyMood} />
 					<EmotionCard handleClick={this.handleEmotionClick} backgroundDefault={this.state.emotionBackgroundDefault} backgroundCustom={this.state.emotionBackgroundCustom} titleText={this.state.emotionTitleText} subtitleText={this.state.emotionSubtitleText} collapse={this.state.emotionCardCollapse} handleCollapse={this.handleEmotionCollapse}/>
-					<HabitCard waterProgress={this.state.waterProgress} habitValues={this.state.habitValues[0]} />
+					<HabitCard 
+						habitValues={this.state.habitValues[0]} 
+						habitProgressPercentage={this.state.waterProgressPercentage}
+						goalRemainder={this.state.waterGoalRemainder}
+						collapse={this.state.waterCardCollapse}
+						handleCollapse={this.handleWaterCollapse}
+						weekTotal={this.state.waterWeekTotal}
+						weeklyProgress={this.state.waterWeeklyProgress}
+						dailyTotal={this.state.waterDailyTotal}
+						handleMinusButton={this.handleWaterMinusButton}
+						handlePlusButton={this.handleWaterPlusButton}
+						handleManualInput={this.handleWaterManualInput}
+						handlePresetButton={this.handleWaterPresetButton}
+						handleAddButton={this.handleWaterAddButton}
+						cssProgressBar={this.state.cssWaterProgressBar}
+						cssTitleText={this.state.cssWaterTitleText}
+						cssAddButton={this.state.cssWaterAddButton}
+					/>
 				</div>
 			</div>
 		)
