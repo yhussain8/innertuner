@@ -63,7 +63,7 @@ export default class Habit extends Component {
 								{this.props.habitValues.incr}{" "}{this.props.habitValues.unit}<PlusButton />
 							</div>
 						</div>
-						<div id="presetButtonsBar" className="flex justify-around text-center font-bold rounded-xl mb-2 px-4">
+						<div id="presetButtonsBar" className=" text-sm sm:text-base flex justify-around text-center font-bold rounded-xl mb-2 px-4">
 							{this.props.habitValues.presets.map((value, index) => <PresetButton key={index} handlePresetButton={this.props.handlePresetButton} valueText={value.valueText} value={value.value} />)}
 						</div>
 
