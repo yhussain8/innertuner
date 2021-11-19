@@ -44,15 +44,6 @@ https://www.figma.com/file/2C6neztrND4rfIlKoksIRj/InnerTuner-SEI%2FUXDI?node-id=
 ![Screen Shot 2021-11-19 at 9 53 41 AM](https://user-images.githubusercontent.com/71451754/142643059-036a2c21-b038-4c27-a863-f7ef8f2db5de.png)
 
 
-
-
-
-![homeNotLoggedIn](images/img1.png)
-![homeLoggedIn](images/img2.png)
-![addForm](images/add.png)
-![userIndex](images/img3.png)
-![userShow](images/img4.png)
-
 ## Icebox
 - Direct a new user to the "set goal" page after the initial sign-up and customize habit goals.
 - Allow users to create new habits as they desire.
