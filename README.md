@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# INNER TUNER
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://innertuner.herokuapp.com/
 
-## Available Scripts
+## Inspiration 
+As we all strive to acheive a healthier body with sound mind, many people invest heavy effort to make improvements. However, nothing can be built over night and we must start with smaller steps with acheivable goals. We trully believe that changing everyday habits can and will gradually tranform our lives. 
 
-In the project directory, you can run:
+That's when INNERTUNER App was created. We have selected three daily habits that majority of our peers value and work on to increase quality of life. The App allows users to track their daily habits in seconds, via intuitive interface and design. 
 
-### `npm start`
+With sleek and easy-to-read visual progress bars, tracking habit and its influnece will become an easy step to adopt into their lives to make sustainable changes. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Functionalities: 
 
-### `npm test`
+Users can set desired goals to acheive for each habit. For example a user can wish to drink 2 Liters of Water, get 8 hours of Sleep, and spend 30 minute to work out daily. They can always visit profile page to edit the goals afterwards.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Users can log the progress through out the day. They have options to log manually or choose to use suggested standard increments. The progress they make towards the goal will be easy to track visually via Daily Habit Progress Bars. 
 
-### `npm run build`
+Further more, we introduced a feature to track daily emotion in simple mood indicators: bad, neutral, good. These daily emotions are also visually trackable in the same manner as Habit Progress Bar at the very center of the App (Weekly Mood Progress Bar). This will allow the user to navigate their ideal habit pattern to accomplish and maintain happy and healthy life-style. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies and Language Used (MERN)
+ 
+ INNERTUNER was built on MERN stack : 
+ MongoDB, Express, React, Node.js, JavaScript and Tailwindcss.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Design with optimal UX & UI
+With INNERTUNER team's initial idea, we had a previlege to consult and worked with two UX & UI Designer students. After several in-depth meetings and feedback sesssions, we were able to achieve a polished look with user expereince in mind as a group. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Our App front-end was developed utilizing Tailwindcss as the primary styling framework and we were able to acheive final look as close as possible to the proposed initial design.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### figma link: 
+https://www.figma.com/file/2C6neztrND4rfIlKoksIRj/InnerTuner-SEI%2FUXDI?node-id=1304%3A2173
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Screenshots
+![homeNotLoggedIn](images/img1.png)
+![homeLoggedIn](images/img2.png)
+![addForm](images/add.png)
+![userIndex](images/img3.png)
+![userShow](images/img4.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Icebox
+- Direct a new user to the "set goal" page after the initial sign-up and customize habit goals.
+- Allow users to create new habits as they desire.
+- Introduce metrics and analysis to suggest the ideal habit pattern for each user.
+- Provide related researched studies on the impact of desired habits. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Additional Resources 
+- Trello Board
+- Zoom 
+- Slack
+- Coffee
+- Memes
+- NAV BARRRR (for you Yousuf)
