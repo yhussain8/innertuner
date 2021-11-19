@@ -12,34 +12,38 @@ import UserProfile from '../../components/UserProfile/UserProfile'
 export default class HomePage extends Component {
 	state = {
 		currentUser: this.props.user.name,
-		currentDate: null,
 		showUserProfile: false,
+		currentDate: null,
+		// weekly progress
 		weekStartDate: null,
 		weekEndDate: null,
-		weeklyMood: [{M: 0}, {Tu: 0}, {W: 0}, {Th: 0}, {F: 0}, {Sa: 0}, {Su: 0}],
+		// emotion
 		currentMood: 0,
+		weeklyMood: [{M: 0}, {Tu: 0}, {W: 0}, {Th: 0}, {F: 0}, {Sa: 0}, {Su: 0}],
 		emotionBackgroundDefault: 'rounded-2xl px-4',
 		emotionBackgroundCustom: 'bg-white',
 		emotionTitleText: 'How is your day going?',
 		emotionSubtitleText: 'Hope you have a wonderful day!',
 		emotionCardCollapse: false,
+		// water
 		waterCardCollapse: false,
-		waterProgressPercentage: '25%',
-		waterWeekTotal: 12000,
-		waterGoalRemainder: 3000,
-		waterDailyTotal: 1000,
+		waterDailyTotal: 0,
+		waterGoalRemainder: 4000,
+		waterProgressPercentage: '0%',
+		waterWeekTotal: 0,
 		cssWaterProgressBar: "water-prog-bg",
 		cssWaterTitleText: "font-bold water-Gradient-Text",
 		cssWaterAddButton: "waterBtn",
 		waterWeeklyProgress: [
-			{ M: 1 },
-			{ Tu: 1 },
-			{ W: 1 },
+			{ M: 0 },
+			{ Tu: 0 },
+			{ W: 0 },
 			{ Th: 0 },
 			{ F: 0 },
 			{ Sa: 0 },
 			{ Su: 0 }
 		],
+		// habit generic
 		habitValues: [
 			{
 				name: "Water",
@@ -98,8 +102,78 @@ export default class HomePage extends Component {
 		]
 	}
 
-	handleWaterAddButton = () => {
-		alert('Save data now')
+	setWaterVariables = (currentDate, weeklyWater) => {
+		let formattedDate = new Date(currentDate)
+		let dayWeek = formattedDate.getDay()
+		let dailyWaterObj = weeklyWater[dayWeek]
+		let dailyTotal = Object.entries(dailyWaterObj)[0][1]
+		let dailyRemainder = this.state.habitValues[0].goal - dailyTotal
+		if (dailyRemainder < 0) {dailyRemainder = 0}
+		let progressPercentage = dailyTotal / this.state.habitValues[0].goal
+		let weeklyTotal = this.state.waterWeekTotal + dailyTotal
+		
+		let waterVariables = {}
+		waterVariables = {
+			'waterDailyTotal': dailyTotal,
+			'waterGoalRemainder': dailyRemainder,
+			'waterProgressPercentage': progressPercentage,
+			'waterWeekTotal': weeklyTotal
+		}
+		return waterVariables
+	}
+
+	fetchWeeklyWater = async (startDate, endDate) => {
+		try {
+			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/weeklyHabit`, {
+				method: "POST",
+				headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+					weekStartDate: startDate,
+					weekEndDate: endDate,
+					inputName: "water"
+           		})
+			})
+			let weeklyWater = await fetchResponse.json()
+			console.log("*** FETCH WEEKLY MOOD ***")
+			console.log('weekly water data', weeklyWater)
+			return weeklyWater
+		} catch (err) {
+			console.error('Error:', err)
+		}
+	}
+
+	handleWaterAddButton = async () => {
+		let dailyTotal = this.state.waterDailyTotal
+		try {
+			let fetchResponse = await fetch(`/api/userInputs/${this.props.user._id}/habit`, {
+				method: "POST",
+				headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+					userId: this.props.user._id,
+                    date: this.state.currentDate,
+					inputName: "water",
+					inputValue: dailyTotal
+                })
+			})
+            let serverResponse = await fetchResponse.json()
+			let dailyRemainder = this.state.waterGoalRemainder - dailyTotal
+			if (dailyRemainder < 0) {dailyRemainder = 0}
+			let progressPercentage = dailyTotal / this.state.habitValues[0].goal
+			let weeklyTotal = this.state.waterWeekTotal + dailyTotal
+			let day = new Date(this.state.currentDate).getDay()
+			let weeklyProgress = this.state.waterWeeklyProgress
+			let dayObject = weeklyProgress[day]
+			let dayKey = Object.keys(dayObject)[0]
+			weeklyProgress[day][dayKey] = dailyTotal
+			this.setState({
+				'waterGoalRemainder': dailyRemainder,
+				'waterProgressPercentage': progressPercentage,
+				'waterWeekTotal': weeklyTotal,
+				'waterWeeklyProgress': weeklyProgress
+			})
+        } catch (err) {
+			console.error('Error:', err)
+        }
 	}
 
 	handleWaterPresetButton = (value) => {
@@ -249,18 +323,29 @@ export default class HomePage extends Component {
 		
 	selectDate = async (dateSelected) => {
 		let weekDates = this.getWeekDates(dateSelected)
+		// emotion
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
 		let currentMood = this.getTodaysMood(dateSelected, weeklyMood)
 		let emotionVariables = this.setEmotionVariables(currentMood)
+		// water
+		let weeklyWater = await this.fetchWeeklyWater(weekDates[0], weekDates[1])
+		let waterVariables = this.setWaterVariables(dateSelected, weeklyWater)
 		this.setState({
 			currentDate: dateSelected, 
 			weekStartDate: weekDates[0], 
 			weekEndDate: weekDates[1], 
+			// emotion
 			weeklyMood: weeklyMood, 
 			currentMood: currentMood,
 			emotionBackgroundCustom: emotionVariables['emotionBackgroundCustom'],
 			emotionTitleText: emotionVariables['emotionTitleText'],
-			emotionSubtitleText: emotionVariables['emotionSubtitleText']
+			emotionSubtitleText: emotionVariables['emotionSubtitleText'],
+			// water
+			waterWeeklyProgress: weeklyWater,
+			waterDailyTotal: waterVariables['waterDailyTotal'],
+			waterGoalRemainder: waterVariables['waterGoalRemainder'],
+			waterProgressPercentage: waterVariables['waterProgressPercentage'],
+			waterWeekTotal: waterVariables['waterWeekTotal']
 		})
 	}
 
@@ -297,18 +382,29 @@ export default class HomePage extends Component {
 	async componentDidMount () {
 		let todaysDate = this.getTodaysDate()
 		let weekDates = this.getWeekDates(todaysDate)
+		// emotion
 		let weeklyMood = await this.fetchWeeklyMood(weekDates[0], weekDates[1])
 		let currentMood = this.getTodaysMood(todaysDate, weeklyMood)
 		let emotionVariables = this.setEmotionVariables(currentMood)
+		// water
+		let weeklyWater = await this.fetchWeeklyWater(weekDates[0], weekDates[1])
+		let waterVariables = this.setWaterVariables(todaysDate, weeklyWater)
 		this.setState({
 			currentDate: todaysDate, 
 			weekStartDate: weekDates[0], 
 			weekEndDate: weekDates[1], 
+			// emotion
 			weeklyMood: weeklyMood, 
 			currentMood: currentMood, 
 			emotionBackgroundCustom: emotionVariables['emotionBackgroundCustom'],
 			emotionTitleText: emotionVariables['emotionTitleText'],
-			emotionSubtitleText: emotionVariables['emotionSubtitleText']
+			emotionSubtitleText: emotionVariables['emotionSubtitleText'],
+			// water
+			waterWeeklyProgress: weeklyWater,
+			waterDailyTotal: waterVariables['waterDailyTotal'],
+			waterGoalRemainder: waterVariables['waterGoalRemainder'],
+			waterProgressPercentage: waterVariables['waterProgressPercentage'],
+			waterWeekTotal: waterVariables['waterWeekTotal']
 		})
 	}
 	

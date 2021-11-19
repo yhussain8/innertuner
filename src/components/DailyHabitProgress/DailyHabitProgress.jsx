@@ -6,7 +6,7 @@ export default function DailyHabitProgress(props) {
 	return (
 		<div className="dailyHabitProgress pl-1">
 			<div className="progressIndicator ml-1 mt-1">
-                {(props.progressIndicator === 1) 
+                {(props.progressIndicator > 0) 
                 ? 
                 <div>{(props.habitName === "Water")
                     ?
