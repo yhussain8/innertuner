@@ -37,11 +37,11 @@ https://www.figma.com/file/2C6neztrND4rfIlKoksIRj/InnerTuner-SEI%2FUXDI?node-id=
 
 ## Screenshots
 ![Screen Shot 2021-11-19 at 9 46 52 AM](https://user-images.githubusercontent.com/71451754/142643069-1485aa14-11d5-4b03-8402-7150b4145db9.png)
-![Screen Shot 2021-11-19 at 9 53 41 AM](https://user-images.githubusercontent.com/71451754/142643059-036a2c21-b038-4c27-a863-f7ef8f2db5de.png)
-![Screen Shot 2021-11-19 at 9 52 52 AM](https://user-images.githubusercontent.com/71451754/142643062-0d38f521-f270-45b1-a578-f29d1dc83c8c.png)
-![Screen Shot 2021-11-19 at 9 52 20 AM](https://user-images.githubusercontent.com/71451754/142643064-3510212d-85fd-4085-a39b-dcbdd3738766.png)
-![Screen Shot 2021-11-19 at 9 51 16 AM](https://user-images.githubusercontent.com/71451754/142643066-bdbb6d43-44c0-49c7-a193-1bb9497ba276.png)
 ![Screen Shot 2021-11-19 at 9 47 11 AM](https://user-images.githubusercontent.com/71451754/142643068-90fe1c31-b634-4333-a9f1-38757369ec10.png)
+![Screen Shot 2021-11-19 at 9 51 16 AM](https://user-images.githubusercontent.com/71451754/142643066-bdbb6d43-44c0-49c7-a193-1bb9497ba276.png)
+![Screen Shot 2021-11-19 at 9 52 20 AM](https://user-images.githubusercontent.com/71451754/142643064-3510212d-85fd-4085-a39b-dcbdd3738766.png)
+![Screen Shot 2021-11-19 at 9 52 52 AM](https://user-images.githubusercontent.com/71451754/142643062-0d38f521-f270-45b1-a578-f29d1dc83c8c.png)
+![Screen Shot 2021-11-19 at 9 53 41 AM](https://user-images.githubusercontent.com/71451754/142643059-036a2c21-b038-4c27-a863-f7ef8f2db5de.png)
 
 
 
