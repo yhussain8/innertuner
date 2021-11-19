@@ -573,7 +573,7 @@ export default class HomePage extends Component {
 	render() {
 		return (
 			<div id="HomePage" className="">
-				<div className="container">
+				<div className="container-xs sm:container">
 					<NavBar  handleUserProfile={this.handleUserProfile}/>
 					{this.state.showUserProfile
 						?

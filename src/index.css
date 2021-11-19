@@ -25,7 +25,7 @@
     @apply ml-4 w-9 text-gray-400
 }
 .progressIndicator{
-    @apply rounded-full bg-gray-100 text-center   w-10 h-10
+    @apply rounded-full bg-gray-100 text-center   w-10 h-10 
 }
 .habbitDropdown{
     @apply flex h-20 border border-gray-50 shadow-xl rounded-xl mb-4 bg-white
@@ -61,4 +61,7 @@
 }
 .exerciseBtn{
     @apply border rounded-xl h-12 w-full  text-center pt-3 text-white bg-gradient-to-r from-orange-400 to-red-500
+}
+.container-xs{
+    @apply mx-2 mt-6 px-4 border border-blue-50 rounded-2xl text-left w-full
 }

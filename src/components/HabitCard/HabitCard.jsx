@@ -47,19 +47,19 @@ export default class Habit extends Component {
 							<WeeklyHabitProgress weeklyProgress={this.props.weeklyProgress} habitName={this.props.habitValues.name} />
 						</div>
 						<div id="habitInput" className="bg-white flex justify-around rounded-xl px-4 mb-4 ">
-							<div id="minusButton" className="flex" onClick={this.props.handleMinusButton}>
+							<div id="minusButton" className="flex items-center text-sm" onClick={this.props.handleMinusButton}>
 								<MinusButton />{this.props.habitValues.incr}{" "}{this.props.habitValues.unit}
 							</div>
 							<div id="manualInput">
 								<input
-									className="text-center underline font-semibold text-4xl w-20"
+									className="text-center underline font-semibold text-3xl w-20"
 									id="manualInputField"
 									name="dailyTotal"
 									value={this.props.dailyTotal}
 									onChange={this.props.handleManualInput}
 								/>
 							</div>
-							<div id="plusButton" className="flex" onClick={this.props.handlePlusButton}>
+							<div id="plusButton" className="flex items-center text-sm" onClick={this.props.handlePlusButton}>
 								{this.props.habitValues.incr}{" "}{this.props.habitValues.unit}<PlusButton />
 							</div>
 						</div>
