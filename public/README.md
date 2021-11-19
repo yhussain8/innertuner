@@ -26,7 +26,7 @@ Further more, we introduced a feature to track daily emotion in simple mood indi
 
 
 ## Design with optimal UX & UI
-With INNERTUNER team's initial idea, we had a previlege to consult and worked with two UX & UI Designer students. After several in-depth meetings and feedback sesssions, we were able to achieve a polished look with user expereince in mind as a group. 
+With INNERTUNER team's initial idea, we had a previlege to consult and worked with two UX & UI Designer students. Our goal was to create a mobile first App. After several in-depth meetings and feedback sesssions, we were able to achieve a polished look with user expereince in mind as a group. 
 
 Our App front-end was developed utilizing Tailwindcss as the primary styling framework and we were able to acheive final look as close as possible to the proposed initial design.
 
