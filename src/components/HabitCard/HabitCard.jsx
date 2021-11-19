@@ -121,7 +121,10 @@ export default class Habit extends Component {
 		return (
 			<div id="habitCard" className="mb-6 rounded-2xl shadow-xl  bg-white">
 				<div id="cardTop" className="rounded-2xl px-4 bg-white py-2">
-					<div id="progressBar" className="water-prog-bg" style={{ width: '40vw' }}></div>
+					<div id="progressBar" className="water-prog-bg" 
+					
+					style={{ width: '20%' }}></div>
+					
 					<div id="cardTopContents" className="flex justify-between">
 						<div id="titleText" className=" font-bold water-Gradient-Text">
 							<h2 className="">{this.props.habitValues.name}</h2>
@@ -155,15 +158,15 @@ export default class Habit extends Component {
 							<WeeklyHabitProgress weeklyProgress={this.state.weeklyHabitProgress} habitName={this.props.habitValues.name} />
 						</div>
 
-						<div id="habitInput" className="bg-white flex justify-around border border-gray-50 rounded-xl px-4 mb-4">
-							<div id="minusButton" className="flex" onClick={this.handleMinuButton}>
+						<div id="habitInput" className="bg-white flex justify-around rounded-xl px-4 mb-4 ">
+							<div id="minusButton" className="flex " onClick={this.handleMinuButton}>
 								<MinusButton />
 								{this.props.habitValues.incr}{" "}
 								{this.props.habitValues.unit}
 							</div>
 							<div id="manualInput">
 								<input
-									className="text-center underline"
+									className="text-center underline font-semibold text-4xl w-20"
 									id="NewInput"
 									name="NewInput"
 									value={this.state.NewInput}
@@ -177,11 +180,11 @@ export default class Habit extends Component {
 							</div>
 						</div>
 
-						<div id="presetButtonsBar" className="flex justify-around border border-gray-50 rounded-xl mb-2 px-4">
+						<div id="presetButtonsBar" className="flex justify-around text-center font-bold rounded-xl mb-2 px-4">
 							{this.props.habitValues.presets.map((value, index) => <PresetButton handleStdInc={this.handleStdInc} valueText={value.valueText} value={value.value} />)}
 						</div>
 
-						<div id="addButton" className="h-16 border border-gray-50 shadow-xl rounded-xl my-4 px-4 bg-white">
+						<div id="addButton" className="h-16  shadow-xl rounded-xl my-4 px-4 bg-white">
 							<div className="waterBtn ">
 								<button className=""
 									onClick={this.state.handleAddProgress}>ADD</button>{" "}

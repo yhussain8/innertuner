@@ -3,7 +3,7 @@ import DatePicker from '../../components/DatePicker/DatePicker'
 export default function GreetingBar(props) {
     return (
         <div id="greetingBar" className="mt-8 mb-4">
-            <div id="currentDate" className="flex justify-between ">
+            <div id="currentDate" className="flex justify-between text-xl">
                 <p className="">{props.currentDate}</p>
                 <DatePicker currentDate={props.currentDate} selectDate={props.selectDate}/>
             </div>
