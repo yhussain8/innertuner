@@ -3,7 +3,7 @@ export default function DailyProgress(props) {
 		<div className="dailyProgress pl-1">
 			<div className="progressIndicator ml-1 mt-1">
                 {(props.progressIndicator === 1) ? 
-             <svg className=" w-1 h-10"
+             <svg className=" w-10 h-10"
              width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
              <path d="M16.2 10.8001C17.1941 10.8001 18 9.99419 18 9.00007C18 8.00596 17.1941 7.20007 16.2 7.20007C15.2059 7.20007 14.4 8.00596 14.4 9.00007C14.4 9.99419 15.2059 10.8001 16.2 10.8001Z" fill="url(#paint0_linear_1380_4947)"/>
              <path d="M7.80001 10.8001C8.79412 10.8001 9.60001 9.99419 9.60001 9.00007C9.60001 8.00596 8.79412 7.20007 7.80001 7.20007C6.8059 7.20007 6.00001 8.00596 6.00001 9.00007C6.00001 9.99419 6.8059 10.8001 7.80001 10.8001Z" fill="url(#paint1_linear_1380_4947)"/>
