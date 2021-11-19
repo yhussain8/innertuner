@@ -54,28 +54,28 @@ export default class UserProfile extends Component {
 
 				<div className="" id="MainHabit">
 
-					<div id="setGoalForm" className="font-semibold">
+					<div id="setGoalForm" className="font-semibold px-16 sm:px-32">
 						<form>
-							<div id="waterInput" className="h-10">
-								<label className="">Water(ml): </label>
+							<div id="waterInput" className="h-10 flex justify-between">
+								<label className="">Water (mL): </label>
 								<input
-									className=" w-24 text-center bg-gray-100 rounded-lg"
+									className=" w-24 text-center bg-gray-100 rounded-lg my-1"
 									name="waterGoal"
 									value={this.props.habitValues[0].goal}
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div id="exerciseInput" className="h-10">
+							<div id="exerciseInput" className="h-10 flex justify-between">
 								<label>Exercise (min): </label>
 								<input
-									className="w-24 text-center bg-gray-100 rounded-lg"
+									className="w-24 text-center bg-gray-100 rounded-lg mb-1"
 									name="exerciseGoal"
 									value={this.props.habitValues[1].goal}
 									onChange={this.handleChange}
 								/>
 							</div>
-							<div id="sleepInput" className="h-10">
-								<label>Sleep (in min): </label>
+							<div id="sleepInput" className="h-10 flex justify-between">
+								<label>Sleep (min): </label>
 								<input
 									className="w-24 text-center bg-gray-100 rounded-lg"
 									name="sleepGoal"
